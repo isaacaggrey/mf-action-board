@@ -16,9 +16,17 @@ export class JenkinsComponent {
 
   ngOnInit() {
     this.getJenkinsJobs();
+    setInterval(() => {
+      this.getJenkinsJobs();
+    }, 10000);
   }
 
   getJenkinsJobs(): void {
-    this.jenkinsService.getBuilds().then(jobs => { this.jobs = jobs; console.log(jobs); });
+    this.jenkinsService.getBuilds()
+      .then(
+        jobs => {
+          this.jobs = jobs; console.log(jobs);
+        }
+      );
   }
 }
