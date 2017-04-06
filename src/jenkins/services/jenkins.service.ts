@@ -6,27 +6,15 @@ import { JobDetails } from "../../domain/jobDetails";
 import { ActionItem } from "../../domain/action-item";
 import { PriorityCalculator } from "../../domain/priority-calculator";
 
+import { JENKINS_ENV } from '../../config/app-config-constants';
+
 @Injectable()
 export class JenkinsService {
 
-  public jenkinsJobs: string[] = [];
   public baseUrl: string = 'https://jenkins-oscf-sandbox.blackbaudcloud.com';
   public jobs: string[];
 
-  constructor(private http: Http) {
-    this.setJenkinsJobs();
-    this.jobs = [];
-    this.jobs.push('lo-groups_build');
-    this.jobs.push('bluemoon-core_build');
-    this.jobs.push('bluemoon-ui_build');
-    this.jobs.push('notifications_build');
-    this.jobs.push('bluemoon-admin-ui_build');
-    this.jobs.push('segmentation-component_build');
-  }
-
-  setJenkinsJobs(): void {
-    this.jenkinsJobs.push('lo-groups_build');
-  }
+  constructor(private http: Http) {}
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
@@ -36,21 +24,26 @@ export class JenkinsService {
   getActionItems(): Promise<ActionItem[]> {
     let jobsPromises = [];
     let newActionItems: ActionItem[] = [];
-    this.jobs.forEach((jobUrl: string) => {
-      let promise = this.http.get(this.baseUrl + '/job/' + jobUrl + '/lastBuild/api/json')
-        .toPromise()
-        .then(response => {
-          let jobDetails = new JobDetails();
-          jobDetails.result = response.json().result;
-          jobDetails.timestamp = response.json().timestamp;
-          jobDetails.jobName = jobUrl;
-          jobDetails.building = response.json().building;
-          if (jobDetails.result !== 'SUCCESS') {
-            newActionItems.push(this.convertToActionItem(jobDetails));
-          }
-        })
-        .catch(this.handleError);
-      jobsPromises.push(promise);
+    JENKINS_ENV.forEach((env) => {
+      let url = env.url;
+      let envProjects = env.projects;
+      envProjects.forEach((project) => {
+        console.log(project);
+        let promise = this.http.get(url + 'job/' + project + '/lastBuild/api/json')
+          .toPromise()
+          .then(response => {
+            let jobDetails = new JobDetails();
+            jobDetails.result = response.json().result;
+            jobDetails.timestamp = response.json().timestamp;
+            jobDetails.jobName = project;
+            jobDetails.building = response.json().building;
+            if (jobDetails.result !== 'SUCCESS') {
+              newActionItems.push(this.convertToActionItem(jobDetails));
+            }
+          })
+          .catch(this.handleError);
+        jobsPromises.push(promise);
+      });
     });
     return new Promise<ActionItem[]>((resolve, reject) => {
       Promise.all(jobsPromises).then(() => {
