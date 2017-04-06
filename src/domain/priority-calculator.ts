@@ -1,10 +1,11 @@
 import { ActionItem } from "./action-item";
 import { GITHUB_PR_SLA_MS } from '../config/app-config-constants'
+import { JENKINS_ACTION_ITEM_SLA_MS } from '../config/app-config-constants'
 
 export class PriorityCalculator {
 
     static GITHUB_ACTION_ITEM_SLA : number = GITHUB_PR_SLA_MS;
-    static JENKINS_ACTION_ITEM_SLA : number = 43200000;
+    static JENKINS_ACTION_ITEM_SLA : number = JENKINS_ACTION_ITEM_SLA_MS;
 
     static calculatePriority(actionItem : ActionItem) : ActionItem {
         if (actionItem.source == 'github') {

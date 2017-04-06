@@ -3,11 +3,11 @@
 }
 
 .action-item-panel-yellow {
-    background-color: yellow;
+    background-color: #E9DC51;
     border-radius: 25px;
 }
 .action-item-panel-orange {
-    background-color: orange;
+    background-color: darkorange;
     border-radius: 25px;
 }
 .action-item-panel-red {
