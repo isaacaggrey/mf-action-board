@@ -3,6 +3,7 @@ import { GithubService } from './services/github.service';
 import { OnInit } from '@angular/core';
 
 import { Job } from '../domain/job';
+import { ActionItem } from "../domain/action-item";
 
 @Component({
   selector: 'github',
@@ -10,7 +11,7 @@ import { Job } from '../domain/job';
   styleUrls: ['./github.component.css']
 })
 export class GithubComponent {
-  jobs: Job[];
+  actionItems: ActionItem[];
 
   constructor(private githubService: GithubService) { }
 
@@ -22,11 +23,11 @@ export class GithubComponent {
   }
 
   getGithubJobs(): void {
-    this.githubService.getActionItems();
-      //.then(
-      //  jobs => {
-      //    this.jobs = jobs; console.log(jobs);
-      //  }
-      //);
+    this.githubService.getActionItems()
+      .then(
+        actionItems => {
+          this.actionItems = actionItems; console.log(actionItems);
+        }
+      );
   }
 }

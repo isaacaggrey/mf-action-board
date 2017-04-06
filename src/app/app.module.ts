@@ -17,7 +17,7 @@ import { GithubService } from '../github/services/github.service';
   declarations: [
     AppComponent,
     JenkinsComponent,
-    GithubComponent
+    GithubComponent,
     ActionItemsComponent
   ],
   imports: [
