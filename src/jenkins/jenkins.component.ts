@@ -3,6 +3,7 @@ import { JenkinsService } from './services/jenkins.service';
 import { OnInit } from '@angular/core';
 
 import { Job } from '../domain/job';
+import { ActionItem } from "../domain/action-item";
 
 @Component({
   selector: 'jenkins',
@@ -11,14 +12,24 @@ import { Job } from '../domain/job';
 })
 export class JenkinsComponent {
   jobs: Job[];
+  actionItems: ActionItem;
 
   constructor(private jenkinsService: JenkinsService) { }
 
   ngOnInit() {
-    this.getJenkinsJobs();
-    setInterval(() => {
-      this.getJenkinsJobs();
-    }, 10000);
+    this.getJenkinsJobDetails();
+    // setInterval(() => {
+    //   this.getJenkinsJobDetails();
+    // }, 10000);
+  }
+
+  getJenkinsJobDetails() : void {
+    this.jenkinsService.getSingleJobDetail('lo-groups_build')
+      .then(
+        actionItems => {
+          this.actionItems = actionItems;
+        }
+      );
   }
 
   getJenkinsJobs(): void {
