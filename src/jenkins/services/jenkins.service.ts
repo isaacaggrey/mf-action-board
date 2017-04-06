@@ -11,9 +11,15 @@ export class JenkinsService {
 
   public jenkinsJobs: string[] = [];
   public baseUrl: string = 'https://jenkins-oscf-sandbox.blackbaudcloud.com';
+  public jobs: string[];
 
   constructor(private http: Http) {
     this.setJenkinsJobs();
+    this.jobs = [];
+    this.jobs.push('lo-groups_build');
+    this.jobs.push('bluemoon-core_build');
+    this.jobs.push('bluemoon-ui_build');
+    this.jobs.push('notifications_build');
   }
 
   setJenkinsJobs(): void {
@@ -25,9 +31,9 @@ export class JenkinsService {
     return Promise.reject(error.message || error);
   }
 
-  getJenkinsJobDetails(jobUrls: String[]): Promise<ActionItem[]> {
+  getActionAlerts(): Promise<ActionItem[]> {
     let newActionItems: ActionItem[] = [];
-    jobUrls.forEach((jobUrl: string) => {
+    this.jobs.forEach((jobUrl: string) => {
       const headers = new Headers({'Authorization': 'Basic ' + window.btoa('blackbaud-shafathrehman:4980e8b6a1826e27183760fc4fb126c8')});
       const options = new RequestOptions({headers: headers});
       this.http.get(this.baseUrl + '/job/' + jobUrl + '/lastBuild/api/json', options)
