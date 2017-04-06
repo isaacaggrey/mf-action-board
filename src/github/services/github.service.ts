@@ -7,18 +7,20 @@ import { Job } from '../../domain/job';
 @Injectable()
 export class GithubService {
 
-  constructor(private http: Http) { }
+  constructor(private http:Http) {
+  }
 
-  getBuilds(): Promise<Job[]> {
-    // const headers = new Headers({ 'Authorization': window.btoa('blackbaud-alexfortin:5a6bfb6a406a1e50de33a137a0ec1c70') });
-    // const options = new RequestOptions({ headers: headers });
-    return this.http.get('https://jenkins-oscf-dev.blackbaudcloud.com/api/json')
+  getActionItems():void {
+    const headers = new Headers({'Authorization': 'Basic ' + window.btoa('Blackbaud-RyanMcKay:fde32c4c25f7d3f860e65bed07d8a4053e237499')});
+    const options = new RequestOptions({headers: headers});
+    this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:blackbaud/micro-cervezas', options)
       .toPromise()
-      .then(response => response.json().jobs as Job[])
+      //.then(response => response.json().items)
+      .then(response => console.log(response.json().items))
       .catch(this.handleError);
   }
 
-  private handleError(error: any): Promise<any> {
+  private handleError(error:any):Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }

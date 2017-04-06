@@ -5,7 +5,7 @@ import { OnInit } from '@angular/core';
 import { Job } from '../domain/job';
 
 @Component({
-  selector: 'jenkins',
+  selector: 'github',
   templateUrl: './github.component.html',
   styleUrls: ['./github.component.css']
 })
@@ -18,15 +18,15 @@ export class GithubComponent {
     this.getGithubJobs();
     setInterval(() => {
       this.getGithubJobs();
-    }, 10000);
+    }, 1000000);
   }
 
   getGithubJobs(): void {
-    this.githubService.getBuilds()
-      .then(
-        jobs => {
-          this.jobs = jobs; console.log(jobs);
-        }
-      );
+    this.githubService.getActionItems();
+      //.then(
+      //  jobs => {
+      //    this.jobs = jobs; console.log(jobs);
+      //  }
+      //);
   }
 }
