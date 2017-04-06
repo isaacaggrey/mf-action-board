@@ -2,12 +2,12 @@
     color: white;
 }
 
-.action-item-panel-green {
-    background-color: #360;
-    border-radius: 25px;
-}
 .action-item-panel-yellow {
     background-color: yellow;
+    border-radius: 25px;
+}
+.action-item-panel-orange {
+    background-color: orange;
     border-radius: 25px;
 }
 .action-item-panel-red {
