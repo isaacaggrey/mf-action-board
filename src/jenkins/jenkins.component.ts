@@ -20,7 +20,7 @@ export class JenkinsComponent {
   }
 
   getJenkinsJobDetails() : void {
-    this.jenkinsService.getActionAlerts()
+    this.jenkinsService.getActionItems()
       .then(
         actionItems => {
           this.actionItems = actionItems; console.log(actionItems);

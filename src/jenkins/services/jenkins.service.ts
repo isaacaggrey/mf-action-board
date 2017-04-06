@@ -31,7 +31,7 @@ export class JenkinsService {
     return Promise.reject(error.message || error);
   }
 
-  getActionAlerts(): Promise<ActionItem[]> {
+  getActionItems(): Promise<ActionItem[]> {
     let newActionItems: ActionItem[] = [];
     this.jobs.forEach((jobUrl: string) => {
       const headers = new Headers({'Authorization': 'Basic ' + window.btoa('blackbaud-shafathrehman:4980e8b6a1826e27183760fc4fb126c8')});

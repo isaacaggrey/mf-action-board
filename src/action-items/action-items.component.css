@@ -15,6 +15,10 @@
     border-radius: 25px;
 }
 
+.action-item-text {
+    font-family: "Helvetica Neue", serif;
+}
+
 .buffer {
     margin-top:20px;
     margin-bottom:20px;
