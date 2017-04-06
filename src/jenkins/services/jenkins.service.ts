@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { JobDetails } from "../../domain/jobDetails";
@@ -20,6 +20,8 @@ export class JenkinsService {
     this.jobs.push('bluemoon-core_build');
     this.jobs.push('bluemoon-ui_build');
     this.jobs.push('notifications_build');
+    this.jobs.push('bluemoon-admin-ui_build');
+    this.jobs.push('segmentation-component_build');
   }
 
   setJenkinsJobs(): void {
@@ -32,11 +34,10 @@ export class JenkinsService {
   }
 
   getActionItems(): Promise<ActionItem[]> {
+    let jobsPromises = [];
     let newActionItems: ActionItem[] = [];
     this.jobs.forEach((jobUrl: string) => {
-      const headers = new Headers({'Authorization': 'Basic ' + window.btoa('blackbaud-shafathrehman:4980e8b6a1826e27183760fc4fb126c8')});
-      const options = new RequestOptions({headers: headers});
-      this.http.get(this.baseUrl + '/job/' + jobUrl + '/lastBuild/api/json', options)
+      let promise = this.http.get(this.baseUrl + '/job/' + jobUrl + '/lastBuild/api/json')
         .toPromise()
         .then(response => {
           let jobDetails = new JobDetails();
@@ -44,16 +45,21 @@ export class JenkinsService {
           jobDetails.timestamp = response.json().timestamp;
           jobDetails.jobName = jobUrl;
           jobDetails.building = response.json().building;
-          if(jobDetails.result !== 'SUCCESS') {
+          if (jobDetails.result !== 'SUCCESS') {
             newActionItems.push(this.convertToActionItem(jobDetails));
           }
         })
         .catch(this.handleError);
+      jobsPromises.push(promise);
     });
-    return Promise.resolve(newActionItems);
+    return new Promise<ActionItem[]>((resolve, reject) => {
+      Promise.all(jobsPromises).then(() => {
+        resolve(newActionItems);
+      });
+    });
   }
 
-  private convertToActionItem(jobDetails: JobDetails):ActionItem {
+  private convertToActionItem(jobDetails: JobDetails): ActionItem {
     return PriorityCalculator.calculatePriority({
       name: jobDetails.jobName,
       priority: 0,
@@ -64,6 +70,6 @@ export class JenkinsService {
   }
 
   private buildTypeString(jobDetails: JobDetails): string {
-    return 'Jenkins Build ' + (jobDetails.building ? ' - building' : jobDetails.result);
+    return 'Jenkins Build ' + (jobDetails.building ? ' - building' : ' - ' + jobDetails.result);
   }
 }
