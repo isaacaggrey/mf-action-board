@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ActionItem } from '../domain/action-item';
+import { GithubService } from "../github/services/github.service";
+import { JenkinsService } from "../jenkins/services/jenkins.service";
 
 @Component({
     selector: 'action-items',
@@ -10,7 +12,7 @@ import { ActionItem } from '../domain/action-item';
 export class ActionItemsComponent {
     actionItems: ActionItem[];
 
-    constructor() {}
+    constructor(private githubService: GithubService, private jenkinsService: JenkinsService) {}
 
     ngOnInit() {
         this.getActionItemsList();
@@ -20,26 +22,11 @@ export class ActionItemsComponent {
     }
 
     getActionItemsList(): void {
-        this.actionItems = [{
-            name: "group-member-monitor-build",
-            priority: 3,
-            type: "Jenkins Build - Building",
-            source: "jenkins",
-            created: new Date().getTime()
-        },{
-            name: "bluemoon-core-build",
-            priority: 2,
-            type: "Jenkins Build - Broken",
-            source: "jenkins",
-            created: new Date().getTime()
-        },{
-            name: "LUM-1234-fixed-stuff",
-            priority: 1,
-            type: "Github Pull Request",
-            source: "github",
-            created: new Date().getTime()
-        }];
-        this.actionItems = this.sortByPriorityAndOpenDuration(this.actionItems);
+        Promise.all([this.githubService.getActionItems()]).then(
+            actionItems => {
+                this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
+            }
+        );
     }
 
     sortByPriorityAndOpenDuration(actionItems: ActionItem[]) : ActionItem[] {

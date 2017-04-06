@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { Job } from '../../domain/job';
 import { ActionItem } from "../../domain/action-item";
+import { PriorityCalculator } from "../../domain/priority-calculator";
 
 @Injectable()
 export class GithubService {
@@ -23,13 +24,13 @@ export class GithubService {
   private convertToActionItem(pr:any):ActionItem {
     let regex = "/blackbaud/(.*)/issues";
     let repo = pr.url.match(regex)[1];
-    return {
+    return PriorityCalculator.calculatePriority({
       name: `${repo}: ${pr.title}`,
       priority: 0,
-      type: 'open PR',
+      type: 'Open PR',
       source: 'github',
       created: new Date(pr.created_at).getTime()
-    };
+    });
   }
 
   private handleError(error:any):Promise<any> {

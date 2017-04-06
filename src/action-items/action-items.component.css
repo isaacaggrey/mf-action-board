@@ -1,10 +1,9 @@
 .action-item-list {
-    background-color: #006dcc;
-    border-radius: 25px;
+    color: white;
 }
 
 .action-item-panel-green {
-    background-color: lime;
+    background-color: #360;
     border-radius: 25px;
 }
 .action-item-panel-yellow {
@@ -12,7 +11,7 @@
     border-radius: 25px;
 }
 .action-item-panel-red {
-    background-color: red;
+    background-color: #900;
     border-radius: 25px;
 }
 
