@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { JobDetails } from "../../domain/jobDetails";
 import { ActionItem } from "../../domain/action-item";
+import { PriorityCalculator } from "../../domain/priority-calculator";
 
 @Injectable()
 export class JenkinsService {
@@ -47,13 +48,13 @@ export class JenkinsService {
   }
 
   private convertToActionItem(jobDetails: JobDetails):ActionItem {
-    return {
+    return PriorityCalculator.calculatePriority({
       name: jobDetails.jobName,
       priority: 0,
       type: this.buildTypeString(jobDetails),
       source: 'jenkins',
       created: new Date(jobDetails.timestamp).getTime()
-    };
+    });
   }
 
   private buildTypeString(jobDetails: JobDetails): string {
