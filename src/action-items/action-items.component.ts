@@ -3,6 +3,7 @@ import { OnInit } from '@angular/core';
 import { ActionItem } from '../domain/action-item';
 import { GithubService } from "../github/services/github.service";
 import { JenkinsService } from "../jenkins/services/jenkins.service";
+import { Moment } from 'moment';
 
 @Component({
     selector: 'action-items',
@@ -27,6 +28,10 @@ export class ActionItemsComponent {
                 this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
             }
         );
+    }
+
+    getTimeElapsed(time) {
+        return moment(time).fromNow();
     }
 
     sortByPriorityAndOpenDuration(actionItems: ActionItem[]) : ActionItem[] {
