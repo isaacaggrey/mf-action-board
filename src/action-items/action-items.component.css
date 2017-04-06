@@ -1,0 +1,17 @@
+.action-item-list {
+    background-color: #006dcc;
+    border-radius: 25px;
+}
+
+.action-item-panel {
+    background-color: lime;
+    border-radius: 25px;
+}
+
+.buffer {
+    margin-top:20px;
+    margin-bottom:20px;
+    border-bottom: 15px;
+    border-top: 20px;
+}
+

@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { JenkinsComponent } from '../jenkins/jenkins.component';
 import { JenkinsService } from '../jenkins/services/jenkins.service';
 
+import { ActionItemsComponent } from "../action-items/action-items.component";
+
 import { GithubComponent } from '../github/github.component';
 import { GithubService } from '../github/services/github.service';
 
@@ -16,6 +18,7 @@ import { GithubService } from '../github/services/github.service';
     AppComponent,
     JenkinsComponent,
     GithubComponent
+    ActionItemsComponent
   ],
   imports: [
     BrowserModule,
