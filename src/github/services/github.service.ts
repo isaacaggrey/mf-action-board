@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Job } from '../../domain/job';
 import { ActionItem } from "../../domain/action-item";
 import { PriorityCalculator } from "../../domain/priority-calculator";
 

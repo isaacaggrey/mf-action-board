@@ -24,7 +24,7 @@ export class JenkinsService {
     return Promise.reject(error.message || error);
   }
 
-  getJenkinsJobDetails(jobUrls: String[]): ActionItem[] {
+  getJenkinsJobDetails(jobUrls: String[]): Promise<ActionItem[]> {
     let newActionItems: ActionItem[] = [];
     jobUrls.forEach((jobUrl: string) => {
       const headers = new Headers({'Authorization': 'Basic ' + window.btoa('blackbaud-shafathrehman:4980e8b6a1826e27183760fc4fb126c8')});
@@ -36,20 +36,27 @@ export class JenkinsService {
           jobDetails.result = response.json().result;
           jobDetails.timestamp = response.json().timestamp;
           jobDetails.jobName = jobUrl;
-          newActionItems.push(this.convertToActionItem(jobDetails));
+          jobDetails.building = response.json().building;
+          if(jobDetails.result !== 'SUCCESS') {
+            newActionItems.push(this.convertToActionItem(jobDetails));
+          }
         })
         .catch(this.handleError);
     });
-    return newActionItems;
+    return Promise.resolve(newActionItems);
   }
 
-  private convertToActionItem(jobDetails:any):ActionItem {
+  private convertToActionItem(jobDetails: JobDetails):ActionItem {
     return {
       name: jobDetails.jobName,
       priority: 0,
-      type: 'build',
-      source: 'jennkins',
-      created: 0
+      type: this.buildTypeString(jobDetails),
+      source: 'jenkins',
+      created: new Date(jobDetails.timestamp).getTime()
     };
+  }
+
+  private buildTypeString(jobDetails: JobDetails): string {
+    return 'Jenkins Build ' + (jobDetails.building ? ' - building' : jobDetails.result);
   }
 }

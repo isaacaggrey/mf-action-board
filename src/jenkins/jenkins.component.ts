@@ -17,6 +17,8 @@ export class JenkinsComponent {
     this.jobs = [];
     this.jobs.push('lo-groups_build');
     this.jobs.push('bluemoon-core_build');
+    this.jobs.push('bluemoon-ui_build');
+    this.jobs.push('notifications_build');
   }
 
   ngOnInit() {
@@ -27,6 +29,11 @@ export class JenkinsComponent {
   }
 
   getJenkinsJobDetails() : void {
-    this.actionItems = this.jenkinsService.getJenkinsJobDetails(this.jobs);
+    this.jenkinsService.getJenkinsJobDetails(this.jobs)
+      .then(
+        actionItems => {
+          this.actionItems = actionItems; console.log(actionItems);
+        }
+      );
   }
 }

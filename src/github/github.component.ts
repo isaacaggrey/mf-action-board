@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { GithubService } from './services/github.service';
 import { OnInit } from '@angular/core';
 
-import { Job } from '../domain/job';
 import { ActionItem } from "../domain/action-item";
 
 @Component({
