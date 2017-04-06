@@ -3,15 +3,23 @@
     border-radius: 25px;
 }
 
-.action-item-panel {
+.action-item-panel-green {
     background-color: lime;
+    border-radius: 25px;
+}
+.action-item-panel-yellow {
+    background-color: yellow;
+    border-radius: 25px;
+}
+.action-item-panel-red {
+    background-color: red;
     border-radius: 25px;
 }
 
 .buffer {
     margin-top:20px;
     margin-bottom:20px;
-    border-bottom: 15px;
-    border-top: 20px;
+    padding-bottom: 15px;
+    padding-top: 15px;
 }
 
