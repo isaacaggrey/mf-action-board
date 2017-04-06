@@ -3,14 +3,42 @@
     <div class="col-md-10 action-item-list">
         <h3>Top Action Items:</h3>
 
-        <div class="row buffer" *ngFor="let actionItem of actionItems">
+        <div class="row" *ngFor="let actionItem of actionItems">
             <div class="col-sm-1"></div>
-            <div *ngIf="actionItem.source == 'jenkins'" class="col-sm-10 action-item-panel">
-                <div class="fa fa-cubes fa-3x">Type: {{ actionItem.type }} Name: {{ actionItem.name }}</div>
+
+            <div *ngIf="actionItem.priority == 1">
+                <div *ngIf="actionItem.source == 'jenkins'"class="col-sm-10 action-item-panel-red buffer">
+                    <div class="fa fa-building fa-3x">{{ actionItem.type }}</div>
+                    <div>{{ actionItem.name }}</div>
+                </div>
+                <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel-red buffer">
+                    <div class="fa fa-github fa-3x">{{ actionItem.type }}</div>
+                    <div>{{ actionItem.name }}</div>
+                </div>
             </div>
-            <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel">
-                <div class="fa fa-github fa-3x">Type: {{ actionItem.type }} Name: {{ actionItem.name }}</div>
+
+            <div *ngIf="actionItem.priority == 2">
+                <div *ngIf="actionItem.source == 'jenkins'"class="col-sm-10 action-item-panel-yellow buffer">
+                    <div class="fa fa-building fa-3x">{{ actionItem.type }}</div>
+                    <div>{{ actionItem.name }}</div>
+                </div>
+                <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel-yellow buffer">
+                    <div class="fa fa-github fa-3x">{{ actionItem.type }}</div>
+                    <div>{{ actionItem.name }}</div>
+                </div>
             </div>
+
+            <div *ngIf="actionItem.priority == 3">
+                <div *ngIf="actionItem.source == 'jenkins'"class="col-sm-10 action-item-panel-green buffer">
+                    <div class="fa fa-building fa-3x">{{ actionItem.type }}</div>
+                    <div>{{ actionItem.name }}</div>
+                </div>
+                <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel-green buffer">
+                    <div class="fa fa-github fa-3x">{{ actionItem.type }}</div>
+                    <div>{{ actionItem.name }}</div>
+                </div>
+            </div>
+
             <div class="col-sm-1"></div>
         </div>
     </div>
