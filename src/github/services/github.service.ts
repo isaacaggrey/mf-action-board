@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { GITHUB_USER, GITHUB_TOKEN, GITHUB_TEAM } from '../../config/app-config-constants';
 
 import { ActionItem } from "../../domain/action-item";
 import { PriorityCalculator } from "../../domain/priority-calculator";
@@ -12,9 +13,9 @@ export class GithubService {
   }
 
   getActionItems():Promise<ActionItem[]> {
-    const headers = new Headers({'Authorization': 'Basic ' + window.btoa('Blackbaud-RyanMcKay:fde32c4c25f7d3f860e65bed07d8a4053e237499')});
+    const headers = new Headers({'Authorization': 'Basic ' + window.btoa(GITHUB_USER + ':' + GITHUB_TOKEN)});
     const options = new RequestOptions({headers: headers});
-    return this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:blackbaud/micro-cervezas', options)
+    return this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:' + GITHUB_TEAM, options)
       .toPromise()
       .then(response => response.json().items.map(this.convertToActionItem))
       .catch(this.handleError);
