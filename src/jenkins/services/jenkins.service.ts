@@ -10,11 +10,11 @@ export class JenkinsService {
   constructor(private http: Http) { }
 
   getBuilds(): Promise<Job[]> {
-    const headers = new Headers({ 'Authorization': window.btoa('christopher.cotar:5a6bfb6a406a1e50de33a137a0ec1c70') });
+    const headers = new Headers({ 'Authorization': window.btoa('blackbaud-christophercotar:5a6bfb6a406a1e50de33a137a0ec1c70') });
     const options = new RequestOptions({ headers: headers });
     return this.http.get('https://jenkins-oscf-dev.blackbaudcloud.com/api/json', options)
       .toPromise()
-      .then(response => { console.log(response); return response.json().jobs as Job[]; })
+      .then(response => response.json().jobs as Job[])
       .catch(this.handleError);
   }
 

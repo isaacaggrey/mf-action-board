@@ -19,6 +19,6 @@ export class JenkinsComponent {
   }
 
   getJenkinsJobs(): void {
-    this.jenkinsService.getBuilds().then(jobs => this.jobs = jobs);
+    this.jenkinsService.getBuilds().then(jobs => { this.jobs = jobs; console.log(jobs); });
   }
 }
