@@ -61,7 +61,7 @@ export class JenkinsService {
       priority: 0,
       type: 'build',
       source: 'jennkins',
-      openDuration: 0
+      created: 0
     };
   }
 }
