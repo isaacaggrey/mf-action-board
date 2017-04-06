@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { Job } from '../../domain/job';
 import { JobDetails } from "../../domain/jobDetails";
 import { ActionItem } from "../../domain/action-item";
 
@@ -18,16 +17,6 @@ export class JenkinsService {
 
   setJenkinsJobs(): void {
     this.jenkinsJobs.push('lo-groups_build');
-  }
-
-
-  getBuilds(): Promise<Job[]> {
-    const headers = new Headers({ 'Authorization': 'Basic ' + window.btoa('blackbaud-shafathrehman:4980e8b6a1826e27183760fc4fb126c8') });
-    const options = new RequestOptions({ headers: headers });
-    return this.http.get( this.baseUrl +'/api/json', options)
-      .toPromise()
-      .then(response => response.json().jobs as Job[])
-      .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

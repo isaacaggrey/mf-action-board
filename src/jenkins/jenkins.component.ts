@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { JenkinsService } from './services/jenkins.service';
 import { OnInit } from '@angular/core';
 
-import { Job } from '../domain/job';
 import { ActionItem } from "../domain/action-item";
 
 @Component({
@@ -30,13 +29,4 @@ export class JenkinsComponent {
   getJenkinsJobDetails() : void {
     this.actionItems = this.jenkinsService.getJenkinsJobDetails(this.jobs);
   }
-
-  // getJenkinsJobs(): void {
-  //   this.jenkinsService.getBuilds()
-  //     .then(
-  //       jobs => {
-  //         this.jobs = jobs; console.log(jobs);
-  //       }
-  //     );
-  // }
 }
