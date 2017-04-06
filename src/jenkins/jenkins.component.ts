@@ -11,10 +11,14 @@ import { ActionItem } from "../domain/action-item";
   styleUrls: ['./jenkins.component.css']
 })
 export class JenkinsComponent {
-  jobs: Job[];
-  actionItems: ActionItem;
+  jobs: string[];
+  actionItems: ActionItem[];
 
-  constructor(private jenkinsService: JenkinsService) { }
+  constructor(private jenkinsService: JenkinsService) {
+    this.jobs = [];
+    this.jobs.push('lo-groups_build');
+    this.jobs.push('bluemoon-core_build');
+  }
 
   ngOnInit() {
     this.getJenkinsJobDetails();
@@ -24,20 +28,15 @@ export class JenkinsComponent {
   }
 
   getJenkinsJobDetails() : void {
-    this.jenkinsService.getSingleJobDetail('lo-groups_build')
-      .then(
-        actionItems => {
-          this.actionItems = actionItems;
-        }
-      );
+    this.actionItems = this.jenkinsService.getJenkinsJobDetails(this.jobs);
   }
 
-  getJenkinsJobs(): void {
-    this.jenkinsService.getBuilds()
-      .then(
-        jobs => {
-          this.jobs = jobs; console.log(jobs);
-        }
-      );
-  }
+  // getJenkinsJobs(): void {
+  //   this.jenkinsService.getBuilds()
+  //     .then(
+  //       jobs => {
+  //         this.jobs = jobs; console.log(jobs);
+  //       }
+  //     );
+  // }
 }
