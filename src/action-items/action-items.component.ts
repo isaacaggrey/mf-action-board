@@ -3,7 +3,7 @@ import { OnInit } from '@angular/core';
 import { ActionItem } from '../domain/action-item';
 import { GithubService } from "../github/services/github.service";
 import { JenkinsService } from "../jenkins/services/jenkins.service";
-import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
     selector: 'action-items',
