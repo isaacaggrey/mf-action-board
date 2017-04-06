@@ -26,7 +26,7 @@ export class GithubService {
       priority: 0,
       type: 'open PR',
       source: 'github',
-      openDuration: 0
+      created: new Date(pr.created_at).getTime()
     };
   }
 

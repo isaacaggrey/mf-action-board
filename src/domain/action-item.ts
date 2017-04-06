@@ -3,5 +3,5 @@ export class ActionItem {
     priority: number;
     type: string;
     source: string;
-    openDuration: number;
+    created: number;
 }
