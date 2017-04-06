@@ -21,8 +21,10 @@ export class GithubService {
   }
 
   private convertToActionItem(pr:any):ActionItem {
+    let regex = "/blackbaud/(.*)/issues";
+    let repo = pr.url.match(regex)[1];
     return {
-      name: pr.title,
+      name: `${repo}: ${pr.title}`,
       priority: 0,
       type: 'open PR',
       source: 'github',
