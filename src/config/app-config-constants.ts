@@ -72,22 +72,14 @@ export const JENKINS_ENV = [
   {
     'baseUrl': 'jenkins',
     'projects': [
-      'bluemoon-admin-login_promote',
       'bluemoon-admin-login_release',
       'bluemoon-admin-ui_uat-apps-test',
-      'bluemoon-config-server_promote',
       'bluemoon-config-server_release',
-      'bluemoon-core_promote',
       'bluemoon-core_release',
       'bluemoon-ui_uat-apps-test',
-      'cloud-foundry-tools_promote',
-      'deployment-tracker_promote',
       'deployment-tracker_release',
-      'lo-groups_promote',
       'lo-groups_release',
-      'notifications_promote',
       'notifications_release',
-      'release-the-tracken_promote',
       'release-the-tracken_release',
       'release-the-tracken_uat-apps-test',
       'seed-job'
