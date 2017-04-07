@@ -34,6 +34,10 @@
     padding-top: 15px;
 }
 
+.time-elapsed {
+    padding-left: 70px;
+}
+
 .rage-face, .orange-face, .yellow-face{
     vertical-align: middle;
     width: 80px;

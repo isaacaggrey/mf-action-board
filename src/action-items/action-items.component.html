@@ -5,13 +5,13 @@
             <div *ngIf="actionItem.source == 'jenkins'"class="col-sm-10 action-item-panel-red buffer">
                 <div class="action-item-text"><i class="icon fa fa-building fa-3x"></i>{{ actionItem.name }}
                     <img class="rage-face" src="../assets/red-face.png">
-                    <div>{{ this.getTimeElapsed(actionItem.created) }}</div>
+                    <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
                 </div>
             </div>
             <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel-red buffer">
                 <div class="action-item-text"><i class="icon fa fa-github fa-3x"></i>{{ actionItem.name }}
                     <img class="rage-face" src="../assets/red-face.png">
-                    <div>{{ this.getTimeElapsed(actionItem.created) }}</div>
+                    <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
                 </div>
             </div>
         </div>
@@ -20,13 +20,13 @@
             <div *ngIf="actionItem.source == 'jenkins'"class="col-sm-10 action-item-panel-orange buffer">
                 <div class="action-item-text"><i class="icon fa fa-building fa-3x"></i>{{ actionItem.name }}
                     <img class="orange-face" src="../assets/orange-face.png">
-                    <div>{{ this.getTimeElapsed(actionItem.created) }}</div>
+                    <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
                 </div>
             </div>
             <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel-orange buffer">
                 <div class="action-item-text"><i class="icon fa fa-github fa-3x"></i>{{ actionItem.name }}
                     <img class="orange-face" src="../assets/orange-face.png">
-                    <div>{{ this.getTimeElapsed(actionItem.created) }}</div>
+                    <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
                 </div>
             </div>
         </div>
@@ -35,13 +35,13 @@
             <div *ngIf="actionItem.source == 'jenkins'"class="col-sm-10 action-item-panel-yellow buffer">
                 <div class="action-item-text"><i class="icon fa fa-building fa-3x"></i>{{ actionItem.name }}
                     <img class="yellow-face" src="../assets/yellow-face.png">
-                    <div>{{ this.getTimeElapsed(actionItem.created) }}</div>
+                    <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
                 </div>
             </div>
             <div *ngIf="actionItem.source == 'github'" class="col-sm-10 action-item-panel-yellow buffer">
                 <div class="action-item-text"><i class="icon fa fa-github fa-3x"></i>{{ actionItem.name }}
                     <img class="yellow-face" src="../assets/yellow-face.png">
-                    <div>{{ this.getTimeElapsed(actionItem.created) }}</div>
+                    <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
                 </div>
             </div>
         </div>
