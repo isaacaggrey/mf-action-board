@@ -19,7 +19,7 @@ export class ActionItemsComponent {
         this.getActionItemsList();
         setInterval(() => {
           this.getActionItemsList();
-        }, 10000000);
+        }, 10000);
     }
 
     getActionItemsList(): void {
