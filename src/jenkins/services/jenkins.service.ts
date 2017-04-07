@@ -28,7 +28,6 @@ export class JenkinsService {
       let url = env.url;
       let envProjects = env.projects;
       envProjects.forEach((project) => {
-        console.log(project);
         let promise = this.http.get(url + 'job/' + project + '/lastBuild/api/json')
           .toPromise()
           .then(response => {
