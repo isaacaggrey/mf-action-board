@@ -21,7 +21,7 @@
 }
 
 .action-item-text {
-    font-family: "Helvetica Neue", serif;
+    font-family: Helvetica, sans-serif;
     font-size: 45px;
     white-space: nowrap;
     text-overflow: ellipsis;
