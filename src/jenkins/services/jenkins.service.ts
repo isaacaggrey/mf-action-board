@@ -28,7 +28,7 @@ export class JenkinsService {
       let url = env.url;
       let envProjects = env.projects;
       envProjects.forEach((project) => {
-        let promise = this.http.get(url + 'job/' + project + '/lastBuild/api/json')
+        let promise = this.http.get(url + 'job/' + project + '/lastCompletedBuild/api/json')
           .toPromise()
           .then(response => {
             let jobDetails = new JobDetails();
@@ -37,7 +37,7 @@ export class JenkinsService {
             jobDetails.jobName = project;
             jobDetails.building = response.json().building;
             jobDetails.url = response.json().url;
-            if (jobDetails.result !== 'SUCCESS') {
+            if (jobDetails.result === 'FAILURE') {
               newActionItems.push(this.convertToActionItem(jobDetails));
             }
           })
