@@ -20,7 +20,7 @@
 
 .action-item-text {
     font-family: "Helvetica Neue", serif;
-    font-size: 20px;
+    font-size: 45px;
 }
 
 .icon {
@@ -35,7 +35,7 @@
 }
 
 .time-elapsed {
-    padding-left: 70px;
+    padding-left: 75px;
 }
 
 .rage-face, .orange-face, .yellow-face{
