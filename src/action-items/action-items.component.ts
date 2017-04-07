@@ -36,15 +36,15 @@ export class ActionItemsComponent {
 
     sortByPriorityAndOpenDuration(actionItems: ActionItem[]) : ActionItem[] {
         let red = actionItems.filter(function(a) {
-            return a.priority == 1;
+            return a.priority === 1;
         });
 
         let yellow = actionItems.filter(function(a) {
-            return a.priority == 2;
+            return a.priority === 2;
         });
 
         let green = actionItems.filter(function(a) {
-            return a.priority == 3;
+            return a.priority === 3;
         });
 
         return red.sort(this.sortByOpenDuration)
