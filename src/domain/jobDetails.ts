@@ -3,4 +3,5 @@ export class JobDetails {
   timestamp: string;
   jobName: string;
   building: boolean;
+  url: string;
 }
