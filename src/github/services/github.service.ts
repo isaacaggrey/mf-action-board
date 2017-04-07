@@ -29,7 +29,8 @@ export class GithubService {
       priority: 0,
       type: 'Open PR',
       source: 'github',
-      created: new Date(pr.created_at).getTime()
+      created: new Date(pr.created_at).getTime(),
+      url: `${pr.html_url}`
     });
   }
 

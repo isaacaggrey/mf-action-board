@@ -37,6 +37,7 @@ export class JenkinsService {
             jobDetails.timestamp = response.json().timestamp;
             jobDetails.jobName = project;
             jobDetails.building = response.json().building;
+            jobDetails.url = response.json().url;
             if (jobDetails.result !== 'SUCCESS') {
               newActionItems.push(this.convertToActionItem(jobDetails));
             }
@@ -58,7 +59,8 @@ export class JenkinsService {
       priority: 0,
       type: this.buildTypeString(jobDetails),
       source: 'jenkins',
-      created: new Date(jobDetails.timestamp).getTime()
+      created: new Date(jobDetails.timestamp).getTime(),
+      url: jobDetails.url
     });
   }
 

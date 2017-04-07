@@ -4,4 +4,5 @@ export class ActionItem {
     type: string;
     source: string;
     created: number;
+    url: string;
 }
