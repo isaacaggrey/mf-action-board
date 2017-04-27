@@ -18,11 +18,6 @@ export class JenkinsService {
 
   constructor(private http: Http) {}
 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
-  }
-
   getActionItems(): Promise<ActionItem[]> {
     const headers = new Headers({'Authorization': 'Basic ' + window.btoa(GITHUB_USER + ':' + GITHUB_TOKEN)});
     const options = new RequestOptions({headers: headers});
@@ -49,7 +44,7 @@ export class JenkinsService {
         jobsPromises.push(promise);
       });
     });
-    return new Promise<ActionItem[]>((resolve, reject) => {
+    return new Promise<ActionItem[]>((resolve) => {
       Promise.all(jobsPromises).then(() => {
         resolve(newActionItems);
       });
@@ -65,6 +60,12 @@ export class JenkinsService {
       created: new Date(jobDetails.timestamp).getTime(),
       url: jobDetails.url
     });
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error);
+    // ignore failure so that Promise.All() in calling component can resolve successful calls
+    return Promise.resolve();
   }
 
   private buildTypeString(jobDetails: JobDetails): string {

@@ -23,7 +23,7 @@ export class ActionItemsComponent {
     }
 
     getActionItemsList(): void {
-        this.githubService.getActionItems().then(
+        Promise.all([this.githubService.getActionItems(), this.jenkinsService.getActionItems()]).then(
             actionItems => {
                 this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
             }
