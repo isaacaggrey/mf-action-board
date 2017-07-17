@@ -1,87 +1,11 @@
 export const GITHUB_TEAM = 'blackbaud/micro-cervezas';
+export const GITHUB_TEAM_ID = '1823440';
 export const GITHUB_USER = 'Blackbaud-ChristopherCotar';
 export const GITHUB_TOKEN = '2e49ae60d9dd3ff79d60f9d3ce212b1a3d4676bf';
 export const GITHUB_PR_SLA_MS = 14400000;
 export const JENKINS_ACTION_ITEM_SLA_MS = 43200000;
+export const JENKINS_BUILD_SUCCESS_STRING = 'blue-anime';
 export const JENKINS_ENV = [
-  {
-    'baseUrl': 'jenkins',
-    'projects': [
-      'bluemoon-admin-login_build',
-      'bluemoon-admin-login_dev-apps-deploy',
-      'bluemoon-admin-login_int-apps-deploy',
-      'bluemoon-admin-ui_build',
-      'bluemoon-admin-ui_int-apps-test',
-      'bluemoon-config-server_build',
-      'bluemoon-core_build',
-      'bluemoon-core_dev-apps-deploy',
-      'bluemoon-core_int-apps-deploy',
-      'bluemoon-ui_build',
-      'bluemoon-ui_int-apps-test',
-      'cloud-foundry-tools_build',
-      'common-test_build',
-      'deployment-tracker_build',
-      'deployment-tracker_dev-apps-deploy',
-      'deployment-tracker_int-apps-deploy',
-      'geocodio-client_build',
-      'geodude_build',
-      'geodude_dev-apps-deploy',
-      'geodude_int-apps-deploy',
-      'gradle-core_build',
-      'gradle-docker_build',
-      'gradle-internal_build',
-      'gradle-templates_build',
-      'jenkins-jobs-dsl_build',
-      'lo-groups-integration_int-apps-test',
-      'lo-groups_build',
-      'lo-groups_dev-apps-deploy',
-      'lo-groups_int-apps-deploy',
-      'loki_build',
-      'notifications-component_build',
-      'notifications-component_dev-apps-test',
-      'notifications-component_dev-apps-test-nightly',
-      'notifications-component_int-apps-test',
-      'notifications_build',
-      'notifications_dev-apps-deploy',
-      'notifications_int-apps-deploy',
-      'release-the-tracken_build',
-      'release-the-tracken_dev-apps-deploy',
-      'release-the-tracken_dev-apps-test',
-      'release-the-tracken_dev-apps-test-nightly',
-      'release-the-tracken_int-apps-deploy',
-      'release-the-tracken_int-apps-test',
-      'search-int-tests_int-apps-test',
-      'seed-job',
-      'swagger-client-templates_build',
-      'swagger-codegen_build',
-      'wealth_build',
-      'wealth_dev-apps-deploy',
-      'wealth_int-apps-deploy',
-    ],
-    'url': 'https://jenkins-oscf-dev.blackbaudcloud.com/',
-    'updateInterval': 60,
-    'name': 'build-test',
-    'disabled': false
-  },
-  {
-    'baseUrl': 'jenkins',
-    'projects': [
-      'bluemoon-admin-login_release',
-      'bluemoon-admin-ui_uat-apps-test',
-      'bluemoon-config-server_release',
-      'bluemoon-core_release',
-      'bluemoon-ui_uat-apps-test',
-      'deployment-tracker_release',
-      'lo-groups_release',
-      'notifications_release',
-      'release-the-tracken_release',
-      'release-the-tracken_uat-apps-test',
-      'wealth_release',
-      'seed-job'
-    ],
-    'url': 'https://jenkins-oscf-releases.blackbaudcloud.com/',
-    'updateInterval': 60,
-    'name': 'release',
-    'disabled': true
-  }
+    'https://jenkins-oscf-dev.blackbaudcloud.com/',
+    'https://jenkins-oscf-releases.blackbaudcloud.com/'
 ];

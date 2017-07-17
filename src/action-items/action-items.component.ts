@@ -10,16 +10,18 @@ import * as moment from 'moment';
     templateUrl: './action-items.component.html',
     styleUrls: ['./action-items.component.css']
 })
-export class ActionItemsComponent {
+export class ActionItemsComponent implements OnInit {
     actionItems: ActionItem[];
 
     constructor(private githubService: GithubService, private jenkinsService: JenkinsService) {}
 
     ngOnInit() {
+      this.jenkinsService.loadRepos().then(() => {
         this.getActionItemsList();
         setInterval(() => {
           this.getActionItemsList();
         }, 30000);
+      });
     }
 
     getActionItemsList(): void {
