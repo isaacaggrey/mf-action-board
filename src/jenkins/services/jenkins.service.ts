@@ -1,10 +1,10 @@
-import {Injectable, OnInit} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { JobDetails } from "../../domain/jobDetails";
-import { ActionItem } from "../../domain/action-item";
-import { PriorityCalculator } from "../../domain/priority-calculator";
+import { JobDetails } from '../../domain/jobDetails';
+import { ActionItem } from '../../domain/action-item';
+import { PriorityCalculator } from '../../domain/priority-calculator';
 import { Headers, RequestOptions } from '@angular/http';
 
 import { GITHUB_TEAM_ID, JENKINS_BUILD_SUCCESS_STRING, JENKINS_ENV } from '../../config/app-config-constants';

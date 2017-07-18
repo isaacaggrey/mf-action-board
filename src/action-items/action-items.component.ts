@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ActionItem } from '../domain/action-item';
-import { GithubService } from "../github/services/github.service";
-import { JenkinsService } from "../jenkins/services/jenkins.service";
+import { GithubService } from '../github/services/github.service';
+import { JenkinsService } from '../jenkins/services/jenkins.service';
 import * as moment from 'moment';
 
 @Component({
@@ -36,16 +36,16 @@ export class ActionItemsComponent implements OnInit {
         return moment(time).fromNow();
     }
 
-    sortByPriorityAndOpenDuration(actionItems: ActionItem[]) : ActionItem[] {
-        let red = actionItems.filter(function(a) {
+    sortByPriorityAndOpenDuration(actionItems: ActionItem[]): ActionItem[] {
+        const red = actionItems.filter(function(a) {
             return a.priority === 1;
         });
 
-        let yellow = actionItems.filter(function(a) {
+        const yellow = actionItems.filter(function(a) {
             return a.priority === 2;
         });
 
-        let green = actionItems.filter(function(a) {
+        const green = actionItems.filter(function(a) {
             return a.priority === 3;
         });
 
@@ -54,7 +54,7 @@ export class ActionItemsComponent implements OnInit {
             .concat(green.sort(this.sortByOpenDuration));
     }
 
-    sortByOpenDuration(a,b) {
+    sortByOpenDuration(a, b) {
         if (a.created > b.created) {
             return 1;
         } else if (a.created < b.created) {

@@ -3,16 +3,15 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import { GITHUB_USER, GITHUB_TOKEN, GITHUB_TEAM } from '../../config/app-config-constants';
 
-import { ActionItem } from "../../domain/action-item";
-import { PriorityCalculator } from "../../domain/priority-calculator";
+import { ActionItem } from '../../domain/action-item';
+import { PriorityCalculator } from '../../domain/priority-calculator';
 
 @Injectable()
 export class GithubService {
 
-  constructor(private http:Http) {
-  }
+  constructor(private http: Http) {}
 
-  getActionItems():Promise<ActionItem[]> {
+  getActionItems(): Promise<ActionItem[]> {
     const headers = new Headers({'Authorization': 'Basic ' + window.btoa(GITHUB_USER + ':' + GITHUB_TOKEN)});
     const options = new RequestOptions({headers: headers});
     return this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:' + GITHUB_TEAM, options)
@@ -21,9 +20,9 @@ export class GithubService {
       .catch(this.handleError);
   }
 
-  private convertToActionItem(pr:any):ActionItem {
-    let regex = "/blackbaud/(.*)/issues";
-    let repo = pr.url.match(regex)[1];
+  private convertToActionItem(pr: any): ActionItem {
+    const regex = '/blackbaud/(.*)/issues';
+    const repo = pr.url.match(regex)[1];
     return PriorityCalculator.calculatePriority({
       name: `${repo}: ${pr.title}`,
       priority: 0,
@@ -34,7 +33,7 @@ export class GithubService {
     });
   }
 
-  private handleError(error:any):Promise<any> {
+  private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     // ignore failure so that Promise.All() in calling component can resolve successful calls
     return Promise.resolve({});
