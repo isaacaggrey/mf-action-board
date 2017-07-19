@@ -1,6 +1,16 @@
-# OtgDashboard
+# MF Action Board
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
+
+## Install prereqs
+
+If you have not done so already, install [nvm](https://github.com/creationix/nvm)
+
+Within this project's directory, run the following commands
+* nvm install
+* nvm use
+* npm install
+* npm install -g @angular/cli
 
 ## Development server
 
