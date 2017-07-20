@@ -7,8 +7,10 @@ import { ActionItem } from '../../domain/action-item';
 import { PriorityCalculator } from '../../domain/priority-calculator';
 import { Headers, RequestOptions } from '@angular/http';
 
-import { GITHUB_TEAM_ID, JENKINS_BUILD_SUCCESS_STRING, JENKINS_ENV } from '../../config/app-config-constants';
-import { GITHUB_USER, GITHUB_TOKEN } from '../../config/app-config-constants';
+import {
+  JENKINS_BUILD_SUCCESS_STRING, JENKINS_ENV, MF_GITHUB_TOKEN,
+  MF_GITHUB_USERNAME
+} from '../../config/app-config-constants';
 
 @Injectable()
 export class JenkinsService {
@@ -17,13 +19,20 @@ export class JenkinsService {
 
   constructor(private http: Http) {
     this.repoNames = [];
+  }
+
+  private init() {
+    const mfGithubUsername = localStorage.getItem(MF_GITHUB_USERNAME);
+    const mfGithubToken = localStorage.getItem(MF_GITHUB_TOKEN);
     this.options = new RequestOptions({
-      headers: new Headers({'Authorization': 'Basic ' + window.btoa(GITHUB_USER + ':' + GITHUB_TOKEN)})
+      headers: new Headers({'Authorization': 'Basic ' + window.btoa(mfGithubUsername + ':' + mfGithubToken)})
     });
   }
 
   loadRepos() {
-    return this.http.get('https://api.github.com/teams/' + GITHUB_TEAM_ID + '/repos?per_page=100', this.options)
+    this.init();
+    const mfGithubTeamId = localStorage.getItem('MF_GITHUB_TEAM_ID');
+    return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.options)
       .toPromise()
       .then((response) => {
         const repos = response.json();

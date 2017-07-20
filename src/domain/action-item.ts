@@ -5,4 +5,5 @@ export class ActionItem {
     source: string;
     created: number;
     url: string;
+    model?: string;
 }

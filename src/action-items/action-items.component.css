@@ -19,13 +19,20 @@
 .action-item-panel.red {
     background-color: #900;
 }
+.action-item-panel.blue {
+  background-color: mediumblue;
+}
 
 .action-item-text {
     font-family: Helvetica, sans-serif;
     font-size: 45px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    overflow: hidden
+    overflow: hidden;
+}
+
+input.action-item-config {
+  color: black;
 }
 
 .icon {

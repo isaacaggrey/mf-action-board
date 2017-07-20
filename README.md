@@ -12,6 +12,24 @@ Within this project's directory, run the following commands
 * npm install
 * npm install -g @angular/cli
 
+## Configuration of board
+
+* Username
+  * Either personal or new user that is a member of your team (we rely on GitHub team repo association to get builds!!)
+* Github api token 
+  * account settings -> personal access tokens
+* Team ID
+  * `curl -u <username>:<github-api-token> https://api.github.com/user/teams | grep '"name": "<teamname>"' -A 3`
+    * i.e. `curl -u blackbaud-christophercotar:1e49ze..................... https://api.github.com/user/teams | grep '"name": "micro-cervezas"' -A 3`
+  * get team id from the property `"id": <id>`
+* Team Name
+  * Self explanatory: `blackbaud/<teamname>`
+  
+* GitHub team repo association cleanup
+  * This task is a must do if you'd like to only see builds your team owns.
+  * Find someone with super admin access to GitHub and request that they remove access rights to all repos your team does not care about the builds for.  They must have super access since you can't modify collaborators of projects your team is not admins of.
+    * i.e. micro-cervezas had read access to `blackbaud/alfred`. New policy is members of the blackbaud org have read access to all repos in org, this is no longer needed.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

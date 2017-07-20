@@ -1,6 +1,21 @@
+<button (click)="saveConfig()">Save Config</button>
+<button (click)="resetConfig()">Reset Config</button>
 <div class="action-item-list">
     <div class="row" *ngFor="let actionItem of actionItems">
         <div class="col-sm-1"></div>
+          <div *ngIf="actionItem.priority == 0">
+            <div *ngIf="actionItem.source == 'config'" class="col-sm-12 action-item-panel blue buffer">
+                <div class="action-item-content">
+                  <div class="col-sm-1"><i class="icon fa fa-cog fa-4x"></i></div>
+                  <div class="action-item-text col-sm-10">{{ actionItem.name }}:
+                    <input [(ngModel)]="githubConfig[actionItem.model]" ngTrim class="action-item-config" type="text"/>
+                  </div>
+                  <div class="col-sm-1">
+                    <img class="rage-face" src="../assets/red-face.png">
+                  </div>
+                </div>
+            </div>
+          </div>
         <div *ngIf="actionItem.priority == 1">
             <div *ngIf="actionItem.source == 'jenkins'" class="col-sm-12 action-item-panel red buffer">
               <a href="{{ actionItem.url }}" target="_blank">
