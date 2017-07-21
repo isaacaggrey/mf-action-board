@@ -51,7 +51,7 @@ export class JenkinsService {
     const newActionItems: ActionItem[] = [];
     JENKINS_ENV.forEach((url) => {
       const promise = this.http.get(
-        url + 'api/json?tree=jobs[name,lastCompletedBuild[number,duration,timestamp,result,url]]', this.options)
+        url + 'api/json?tree=jobs[name,color,lastCompletedBuild[number,duration,timestamp,result,url]]', this.options)
         .toPromise()
         .then((response) => this.processJobs(response, newActionItems))
         .catch(this.handleError);
@@ -72,22 +72,27 @@ export class JenkinsService {
   private addNewActionItem(job, newActionItems) {
     const lastCompletedBuild = job.lastCompletedBuild;
     if (lastCompletedBuild) {
-      const jobName = job.name;
-      const jobNameToBuildName = jobName.substring(0, jobName.indexOf('_'));
-      const jobType = jobName.substring(jobName.indexOf('_') + 1, jobName.length);
-      const jobStatus = lastCompletedBuild.result;
-      if (jobType !== 'release' && this.repoNames[jobNameToBuildName] && jobStatus === 'FAILURE') {
-        const jobUrl = lastCompletedBuild.url;
-        const buildTimestamp = lastCompletedBuild.timestamp;
+      if (this.includeJob(job)) {
+        const jobStatus = lastCompletedBuild.result;
         const jobDetails = new JobDetails();
         jobDetails.result = jobStatus;
-        jobDetails.jobName = jobName;
-        jobDetails.timestamp = buildTimestamp;
+        jobDetails.jobName = job.name;
+        jobDetails.timestamp = lastCompletedBuild.timestamp;
         jobDetails.building = jobStatus === JENKINS_BUILD_SUCCESS_STRING;
-        jobDetails.url = jobUrl;
+        jobDetails.url = lastCompletedBuild.url;
         newActionItems.push(this.convertToActionItem(jobDetails));
       }
     }
+  }
+
+  private includeJob(job) {
+    const jobName = job.name;
+    const jobType = jobName.substring(jobName.indexOf('_') + 1, jobName.length);
+    const jobNameToBuildName = jobName.substring(0, jobName.indexOf('_'));
+    return jobType !== 'release'
+      && job.color !== 'disabled'
+      && this.repoNames[jobNameToBuildName]
+      && job.lastCompletedBuild.result === 'FAILURE';
   }
 
   private convertToActionItem(jobDetails: JobDetails): ActionItem {
