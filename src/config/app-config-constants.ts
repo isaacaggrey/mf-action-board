@@ -7,7 +7,7 @@ export const MF_GITHUB_USERNAME = 'MF_GITHUB_USERNAME';
 export const MF_GITHUB_TOKEN = 'MF_GITHUB_TOKEN';
 export const GITHUB_PR_SLA_MS = 14400000;
 export const JENKINS_ACTION_ITEM_SLA_MS = 43200000;
-export const JENKINS_BUILD_SUCCESS_STRING = 'blue-anime';
+export const JENKINS_JOB_BUILDING_COLOR = 'red_anime';
 export const JENKINS_ENV = [
     'https://jenkins-oscf-dev.blackbaudcloud.com/',
     'https://jenkins-oscf-releases.blackbaudcloud.com/'

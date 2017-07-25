@@ -8,8 +8,8 @@ import { PriorityCalculator } from '../../domain/priority-calculator';
 import { Headers, RequestOptions } from '@angular/http';
 
 import {
-  JENKINS_BUILD_SUCCESS_STRING, JENKINS_ENV, MF_GITHUB_TOKEN,
-  MF_GITHUB_USERNAME
+  JENKINS_JOB_BUILDING_COLOR, JENKINS_ENV, MF_GITHUB_TOKEN,
+  MF_GITHUB_USERNAME, MF_GITHUB_TEAM_ID
 } from '../../config/app-config-constants';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class JenkinsService {
 
   loadRepos() {
     this.init();
-    const mfGithubTeamId = localStorage.getItem('MF_GITHUB_TEAM_ID');
+    const mfGithubTeamId = localStorage.getItem(MF_GITHUB_TEAM_ID);
     return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.options)
       .toPromise()
       .then((response) => {
@@ -51,7 +51,8 @@ export class JenkinsService {
     const newActionItems: ActionItem[] = [];
     JENKINS_ENV.forEach((url) => {
       const promise = this.http.get(
-        url + 'api/json?tree=jobs[name,color,lastCompletedBuild[number,duration,timestamp,result,url]]', this.options)
+        url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,duration,timestamp,result,url]]',
+        this.options)
         .toPromise()
         .then((response) => this.processJobs(response, newActionItems))
         .catch(this.handleError);
@@ -78,11 +79,15 @@ export class JenkinsService {
         jobDetails.result = jobStatus;
         jobDetails.jobName = job.name;
         jobDetails.timestamp = lastCompletedBuild.timestamp;
-        jobDetails.building = jobStatus === JENKINS_BUILD_SUCCESS_STRING;
+        jobDetails.building = this.isBuilding(job);
         jobDetails.url = lastCompletedBuild.url;
         newActionItems.push(this.convertToActionItem(jobDetails));
       }
     }
+  }
+
+  private isBuilding(job) {
+    return job.inQueue || job.color === JENKINS_JOB_BUILDING_COLOR;
   }
 
   private includeJob(job) {
@@ -102,7 +107,8 @@ export class JenkinsService {
       type: this.buildTypeString(jobDetails),
       source: 'jenkins',
       created: new Date(jobDetails.timestamp).getTime(),
-      url: jobDetails.url
+      url: jobDetails.url,
+      building: jobDetails.building
     });
   }
 

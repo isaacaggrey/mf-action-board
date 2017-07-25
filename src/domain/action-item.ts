@@ -6,4 +6,5 @@ export class ActionItem {
     created: number;
     url: string;
     model?: string;
+    building?: boolean;
 }

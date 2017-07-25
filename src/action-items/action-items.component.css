@@ -9,6 +9,12 @@
 .action-item-panel {
     border-radius: 25px;
     text-shadow: 2px 2px 5px black;
+    text-align: left;
+}
+
+.action-item-panel.progress-bar {
+  line-height: inherit;
+  width: 100%;
 }
 .action-item-panel.yellow {
   background-color: #ffe52f;
