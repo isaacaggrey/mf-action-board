@@ -11,10 +11,10 @@ export class ConfigService {
   }
 
   public isConfigured() {
-    return this.githubConfig.team !== null
-      && this.githubConfig.teamId !== null
-      && this.githubConfig.userName !== null
-      && this.githubConfig.token !== null;
+    return this.githubConfig.team
+      && this.githubConfig.teamId
+      && this.githubConfig.userName
+      && this.githubConfig.token;
   }
 
   public loadConfigFromStorage(): void {
@@ -22,14 +22,6 @@ export class ConfigService {
     this.githubConfig.teamId = localStorage.getItem(MF_GITHUB_TEAM_ID);
     this.githubConfig.userName = localStorage.getItem(MF_GITHUB_USERNAME);
     this.githubConfig.token = localStorage.getItem(MF_GITHUB_TOKEN);
-  }
-
-  public resetConfig(): void {
-    this.githubConfig.team = null;
-    this.githubConfig.teamId = null;
-    this.githubConfig.userName = null;
-    this.githubConfig.token = null;
-    localStorage.clear();
   }
 
   public saveConfig(): void {
