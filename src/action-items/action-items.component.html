@@ -1,5 +1,6 @@
-<button (click)="saveConfig()">Save Config</button>
-<button (click)="changeConfig()">Change Config</button>
+<button *ngIf="getDisplaySaveConfigButton()" (click)="saveConfig()">Save Config</button>
+<button *ngIf="getDisplayChangeConfigButton()" (click)="changeConfig()">Change Config</button>
+
 <div class="action-item-list">
   <div class="row" *ngFor="let actionItem of actionItems">
     <div class="col-sm-1"></div>

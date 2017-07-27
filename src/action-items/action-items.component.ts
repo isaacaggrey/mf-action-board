@@ -17,6 +17,7 @@ export class ActionItemsComponent implements OnInit {
   actionItems: ActionItem[];
   githubConfig: GithubConfig = this.configService.githubConfig;
   pollIntervalHandle;
+  isConfiguring: boolean;
   private configActionItems: ActionItem[] = this.loadConfigActionItems();
 
   constructor(private githubService: GithubService,
@@ -27,8 +28,10 @@ export class ActionItemsComponent implements OnInit {
   ngOnInit() {
     this.configService.loadConfigFromStorage();
     if (this.configService.isConfigured()) {
+      this.isConfiguring = false;
       this.loadActionItems();
     } else {
+      this.isConfiguring = true;
       this.loadConfig();
     }
   }
@@ -70,12 +73,24 @@ export class ActionItemsComponent implements OnInit {
 
   saveConfig() {
     this.configService.saveConfig();
+    if (this.configService.isConfigured()) {
+      this.isConfiguring = false;
+    }
     this.loadActionItems();
   }
 
   changeConfig() {
+    this.isConfiguring = true;
     window.clearInterval(this.pollIntervalHandle);
     this.loadConfig();
+  }
+
+  getDisplaySaveConfigButton() {
+    return this.isConfiguring;
+  }
+
+  getDisplayChangeConfigButton() {
+    return !this.isConfiguring;
   }
 
   getActionItemsList(): void {
