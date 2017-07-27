@@ -101,6 +101,14 @@ export class ActionItemsComponent implements OnInit {
     );
   }
 
+  isConfigured() {
+    return this.configService.isConfigured();
+  }
+
+  getTeamUsingBoard() {
+    return this.configService.getConfig().team;
+  }
+
   getTimeElapsed(time) {
     return moment(time).fromNow();
   }

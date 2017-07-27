@@ -69,3 +69,8 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+span#teamUsingBoard{
+  font-size: medium;
+  color: white;
+}

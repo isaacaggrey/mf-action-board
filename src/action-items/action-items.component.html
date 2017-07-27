@@ -1,5 +1,10 @@
 <button *ngIf="getDisplaySaveConfigButton()" (click)="saveConfig()">Save Config</button>
 <button *ngIf="getDisplayChangeConfigButton()" (click)="changeConfig()">Change Config</button>
+<span *ngIf="isConfigured()"
+  class="label label-default"
+  id="teamUsingBoard">
+  {{getTeamUsingBoard()}}
+</span>
 
 <div class="action-item-list">
   <div class="row" *ngFor="let actionItem of actionItems">
