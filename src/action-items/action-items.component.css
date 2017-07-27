@@ -74,3 +74,7 @@ span#teamUsingBoard{
   font-size: medium;
   color: white;
 }
+
+img#noItemsImg.expand{
+  width: 90em;
+}

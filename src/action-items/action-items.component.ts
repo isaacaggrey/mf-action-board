@@ -113,6 +113,10 @@ export class ActionItemsComponent implements OnInit {
     return moment(time).fromNow();
   }
 
+  isActionItemsEmpty() {
+    return this.actionItems.length === 0;
+  }
+
   sortByPriorityAndOpenDuration(actionItems: ActionItem[]): ActionItem[] {
     const red = actionItems.filter(function (a) {
       return a.priority === 1;
