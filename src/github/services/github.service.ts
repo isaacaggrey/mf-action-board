@@ -4,17 +4,18 @@ import 'rxjs/add/operator/toPromise';
 
 import { ActionItem } from '../../domain/action-item';
 import { PriorityCalculator } from '../../domain/priority-calculator';
-import { MF_GITHUB_TEAM, MF_GITHUB_TOKEN, MF_GITHUB_USERNAME } from '../../config/app-config-constants';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class GithubService {
 
-  constructor(private http: Http) {}
+  constructor(private http: Http, private configService: ConfigService) {
+  }
 
   getActionItems(): Promise<ActionItem[]> {
-    const mfGithubTeam = localStorage.getItem(MF_GITHUB_TEAM);
-    const mfGithubUsername = localStorage.getItem(MF_GITHUB_USERNAME);
-    const mfGithubToken = localStorage.getItem(MF_GITHUB_TOKEN);
+    const mfGithubTeam = this.configService.getConfig().team;
+    const mfGithubUsername = this.configService.getConfig().userName;
+    const mfGithubToken = this.configService.getConfig().token;
     const headers = new Headers({'Authorization': 'Basic ' + window.btoa(mfGithubUsername + ':' + mfGithubToken)});
     const options = new RequestOptions({headers: headers});
     return this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:' + mfGithubTeam, options)

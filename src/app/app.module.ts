@@ -8,6 +8,7 @@ import { ActionItemsComponent } from '../action-items/action-items.component';
 
 import { JenkinsService } from '../jenkins/services/jenkins.service';
 import { GithubService } from '../github/services/github.service';
+import { ConfigService } from '../config/config.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { GithubService } from '../github/services/github.service';
     FormsModule,
     HttpModule
   ],
-  providers: [JenkinsService, GithubService],
+  providers: [JenkinsService, GithubService, ConfigService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

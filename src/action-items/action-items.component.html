@@ -1,114 +1,114 @@
 <button (click)="saveConfig()">Save Config</button>
 <button (click)="resetConfig()">Reset Config</button>
 <div class="action-item-list">
-    <div class="row" *ngFor="let actionItem of actionItems">
-        <div class="col-sm-1"></div>
-          <div *ngIf="actionItem.priority == 0">
-            <div *ngIf="actionItem.source == 'config'" class="col-sm-12 action-item-panel blue buffer">
-                <div class="action-item-content">
-                  <div class="col-sm-1"><i class="icon fa fa-cog fa-4x"></i></div>
-                  <div class="action-item-text col-sm-10">{{ actionItem.name }}:
-                    <input [(ngModel)]="githubConfig[actionItem.model]" ngTrim class="action-item-config" type="text"/>
-                  </div>
-                  <div class="col-sm-1">
-                    <img class="rage-face" src="../assets/red-face.png">
-                  </div>
-                </div>
+  <div class="row" *ngFor="let actionItem of actionItems">
+    <div class="col-sm-1"></div>
+    <div *ngIf="actionItem.priority == 0">
+      <div *ngIf="actionItem.source == 'config'" class="col-sm-12 action-item-panel blue buffer">
+        <div class="action-item-content">
+          <div class="col-sm-1"><i class="icon fa fa-cog fa-4x"></i></div>
+          <div class="action-item-text col-sm-10">{{ actionItem.name }}:
+            <input [(ngModel)]="githubConfig[actionItem.model]" ngTrim class="action-item-config" type="text"/>
+          </div>
+          <div class="col-sm-1">
+            <img class="rage-face" src="../assets/red-face.png">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="actionItem.priority == 1">
+      <div *ngIf="actionItem.source == 'jenkins'"
+           [ngClass]="{'progress-bar progress-bar-striped active': actionItem.building}"
+           class="col-sm-12 action-item-panel red buffer">
+        <a href="{{ actionItem.url }}" target="_blank">
+          <div class="action-item-content">
+            <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
+            <div class="action-item-text col-sm-10">{{ actionItem.name }}
+              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+            </div>
+            <div class="col-sm-1">
+              <img class="rage-face" src="../assets/red-face.png">
             </div>
           </div>
-        <div *ngIf="actionItem.priority == 1">
-            <div *ngIf="actionItem.source == 'jenkins'"
-                 [ngClass]="{'progress-bar progress-bar-striped active': actionItem.building}"
-                 class="col-sm-12 action-item-panel red buffer">
-              <a href="{{ actionItem.url }}" target="_blank">
-                  <div class="action-item-content">
-                      <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
-                      <div class="action-item-text col-sm-10">{{ actionItem.name }}
-                          <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
-                      </div>
-                      <div class="col-sm-1">
-                          <img class="rage-face" src="../assets/red-face.png">
-                      </div>
-                  </div>
-              </a>
+        </a>
+      </div>
+      <div *ngIf="actionItem.source == 'github'"
+           class="col-sm-12 action-item-panel red buffer">
+        <a href="{{ actionItem.url }}" target="_blank">
+          <div class="action-item-content">
+            <div class="col-sm-1"><i class="icon fa fa-github fa-4x"></i></div>
+            <div class="action-item-text col-sm-10">{{ actionItem.name }}
+              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
             </div>
-            <div *ngIf="actionItem.source == 'github'"
-                 class="col-sm-12 action-item-panel red buffer">
-              <a href="{{ actionItem.url }}" target="_blank">
-                  <div class="action-item-content">
-                      <div class="col-sm-1"><i class="icon fa fa-github fa-4x"></i></div>
-                      <div class="action-item-text col-sm-10">{{ actionItem.name }}
-                          <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
-                      </div>
-                      <div class="col-sm-1">
-                          <img class="rage-face" src="../assets/red-face.png">
-                      </div>
-                  </div>
-              </a>
+            <div class="col-sm-1">
+              <img class="rage-face" src="../assets/red-face.png">
             </div>
-        </div>
-
-        <div *ngIf="actionItem.priority == 2">
-            <div *ngIf="actionItem.source == 'jenkins'"
-                 [ngClass]="{'progress-bar progress-bar-striped active': actionItem.building}"
-                 class="col-sm-12 action-item-panel orange buffer">
-              <a href="{{ actionItem.url }}" target="_blank">
-                  <div class="action-item-content">
-                      <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
-                      <div class="action-item-text col-sm-10">{{ actionItem.name }}
-                          <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
-                      </div>
-                      <div class="col-sm-1">
-                          <img class="rage-face" src="../assets/orange-face.png">
-                      </div>
-                  </div>
-              </a>
-            </div>
-            <div *ngIf="actionItem.source == 'github'" class="col-sm-12 action-item-panel orange buffer">
-              <a href="{{ actionItem.url }}" target="_blank">
-                  <div class="action-item-content">
-                      <div class="col-sm-1"><i class="icon fa fa-github fa-4x"></i></div>
-                      <div class="action-item-text col-sm-10">{{ actionItem.name }}
-                          <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
-                      </div>
-                      <div class="col-sm-1">
-                          <img class="rage-face" src="../assets/orange-face.png">
-                      </div>
-                  </div>
-              </a>
-            </div>
-        </div>
-
-        <div *ngIf="actionItem.priority == 3">
-            <div *ngIf="actionItem.source == 'jenkins'"
-                 [ngClass]="{'progress-bar progress-bar-striped active': actionItem.building}"
-                 class="col-sm-12 action-item-panel yellow buffer">
-              <a href="{{ actionItem.url }}" target="_blank">
-                  <div class="action-item-content">
-                      <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
-                      <div class="action-item-text col-sm-10">{{ actionItem.name }}
-                          <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
-                      </div>
-                      <div class="col-sm-1">
-                          <img class="rage-face" src="../assets/yellow-face.png">
-                      </div>
-                  </div>
-              </a>
-            </div>
-            <div *ngIf="actionItem.source == 'github'" class="col-sm-12 action-item-panel yellow buffer">
-              <a href="{{ actionItem.url }}" target="_blank">
-                  <div class="action-item-content">
-                      <div class="col-sm-1"><i class="icon fa fa-github fa-4x"></i></div>
-                      <div class="action-item-text col-sm-10">{{ actionItem.name }}
-                          <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
-                      </div>
-                      <div class="col-sm-1">
-                          <img class="rage-face" src="../assets/yellow-face.png">
-                      </div>
-                  </div>
-              </a>
-            </div>
-        </div>
-        <div class="col-sm-1"></div>
+          </div>
+        </a>
+      </div>
     </div>
+
+    <div *ngIf="actionItem.priority == 2">
+      <div *ngIf="actionItem.source == 'jenkins'"
+           [ngClass]="{'progress-bar progress-bar-striped active': actionItem.building}"
+           class="col-sm-12 action-item-panel orange buffer">
+        <a href="{{ actionItem.url }}" target="_blank">
+          <div class="action-item-content">
+            <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
+            <div class="action-item-text col-sm-10">{{ actionItem.name }}
+              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+            </div>
+            <div class="col-sm-1">
+              <img class="rage-face" src="../assets/orange-face.png">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div *ngIf="actionItem.source == 'github'" class="col-sm-12 action-item-panel orange buffer">
+        <a href="{{ actionItem.url }}" target="_blank">
+          <div class="action-item-content">
+            <div class="col-sm-1"><i class="icon fa fa-github fa-4x"></i></div>
+            <div class="action-item-text col-sm-10">{{ actionItem.name }}
+              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+            </div>
+            <div class="col-sm-1">
+              <img class="rage-face" src="../assets/orange-face.png">
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="actionItem.priority == 3">
+      <div *ngIf="actionItem.source == 'jenkins'"
+           [ngClass]="{'progress-bar progress-bar-striped active': actionItem.building}"
+           class="col-sm-12 action-item-panel yellow buffer">
+        <a href="{{ actionItem.url }}" target="_blank">
+          <div class="action-item-content">
+            <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
+            <div class="action-item-text col-sm-10">{{ actionItem.name }}
+              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+            </div>
+            <div class="col-sm-1">
+              <img class="rage-face" src="../assets/yellow-face.png">
+            </div>
+          </div>
+        </a>
+      </div>
+      <div *ngIf="actionItem.source == 'github'" class="col-sm-12 action-item-panel yellow buffer">
+        <a href="{{ actionItem.url }}" target="_blank">
+          <div class="action-item-content">
+            <div class="col-sm-1"><i class="icon fa fa-github fa-4x"></i></div>
+            <div class="action-item-text col-sm-10">{{ actionItem.name }}
+              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+            </div>
+            <div class="col-sm-1">
+              <img class="rage-face" src="../assets/yellow-face.png">
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-1"></div>
+  </div>
 </div>
