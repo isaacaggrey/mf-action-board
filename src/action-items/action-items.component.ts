@@ -15,6 +15,7 @@ import { ConfigService } from '../config/config.service';
 })
 export class ActionItemsComponent implements OnInit {
   actionItems: ActionItem[];
+  showEmptyBoardCongrats = false;
   githubConfig: GithubConfig = this.configService.githubConfig;
   pollIntervalHandle;
   isConfiguring: boolean;
@@ -97,6 +98,7 @@ export class ActionItemsComponent implements OnInit {
     Promise.all([this.githubService.getActionItems(), this.jenkinsService.getActionItems()]).then(
       actionItems => {
         this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
+        this.checkIfShouldDisplayEmptyBoardCongrats();
       }
     );
   }
@@ -113,8 +115,8 @@ export class ActionItemsComponent implements OnInit {
     return moment(time).fromNow();
   }
 
-  isActionItemsEmpty() {
-    return this.actionItems.length === 0;
+  shouldShowEmptyBoardCongrats() {
+    return this.showEmptyBoardCongrats;
   }
 
   sortByPriorityAndOpenDuration(actionItems: ActionItem[]): ActionItem[] {
@@ -143,5 +145,9 @@ export class ActionItemsComponent implements OnInit {
     } else {
       return 0;
     }
+  }
+
+  private checkIfShouldDisplayEmptyBoardCongrats() {
+    this.showEmptyBoardCongrats = this.actionItems.length === 0;
   }
 }
