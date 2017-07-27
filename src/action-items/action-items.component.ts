@@ -124,17 +124,22 @@ export class ActionItemsComponent implements OnInit {
       return a.priority === 1;
     });
 
-    const yellow = actionItems.filter(function (a) {
+    const orange = actionItems.filter(function (a) {
       return a.priority === 2;
     });
 
-    const green = actionItems.filter(function (a) {
+    const yellow = actionItems.filter(function (a) {
       return a.priority === 3;
     });
 
+    const grey = actionItems.filter(function (a) {
+      return a.priority === 4;
+    });
+
     return red.sort(this.sortByOpenDuration)
+      .concat(orange.sort(this.sortByOpenDuration))
       .concat(yellow.sort(this.sortByOpenDuration))
-      .concat(green.sort(this.sortByOpenDuration));
+      .concat(grey.sort(this.sortByOpenDuration));
   }
 
   sortByOpenDuration(a, b) {

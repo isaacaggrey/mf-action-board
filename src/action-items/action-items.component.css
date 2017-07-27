@@ -17,6 +17,10 @@
   width: 100%;
 }
 
+.action-item-panel.grey {
+  background-color: #7f7f7f;
+}
+
 .action-item-panel.yellow {
   background-color: #ffe52f;
 }

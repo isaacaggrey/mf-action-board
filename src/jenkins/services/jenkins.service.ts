@@ -112,6 +112,7 @@ export class JenkinsService {
       source: 'jenkins',
       created: new Date(jobDetails.timestamp).getTime(),
       url: jobDetails.url,
+      do_not_merge: false,
       building: jobDetails.building
     });
   }

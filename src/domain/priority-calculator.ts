@@ -25,6 +25,9 @@ export class PriorityCalculator {
     } else {
       actionItem.priority = 3;
     }
+    if (actionItem.do_not_merge === true) {
+      actionItem.priority = 4;
+    }
   }
 
   static calculatePriorityForJenkinsActionItem(actionItem: ActionItem) {

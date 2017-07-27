@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { ActionItem } from '../../domain/action-item';
 import { PriorityCalculator } from '../../domain/priority-calculator';
 import { ConfigService } from '../../config/config.service';
+import { DO_NOT_MERGE_LABEL_NAME } from './github.constants';
 
 @Injectable()
 export class GithubService {
@@ -20,7 +21,7 @@ export class GithubService {
     const options = new RequestOptions({headers: headers});
     return this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:' + mfGithubTeam, options)
       .toPromise()
-      .then(response => response.json().items.map(this.convertToActionItem))
+      .then(response => response.json().items.map((item => this.convertToActionItem(item))))
       .catch(this.handleError);
   }
 
@@ -33,8 +34,14 @@ export class GithubService {
       type: 'Open PR',
       source: 'github',
       created: new Date(pr.created_at).getTime(),
-      url: `${pr.html_url}`
+      url: `${pr.html_url}`,
+      do_not_merge: this.determineDoNotMergeLabel(pr)
     });
+  }
+
+  private determineDoNotMergeLabel(pr: any): boolean {
+    let labelNames = pr.labels.map(label => { return label.name; });
+    return labelNames.indexOf(DO_NOT_MERGE_LABEL_NAME) > -1;
   }
 
   private handleError(error: any): Promise<any> {
