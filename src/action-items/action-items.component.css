@@ -82,3 +82,24 @@ span#teamUsingBoard{
 img#noItemsImg.expand{
   width: 90em;
 }
+
+.time-elapsed-and-progress-bar-wrapper{
+  overflow: hidden;
+}
+
+.time-elapsed-in-wrapper{
+  font-size: 20px;
+  float: left;
+  padding-right: 10px;
+}
+
+.progress{
+  height: 35px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.progress-bar{
+  background-color: grey;
+}
+

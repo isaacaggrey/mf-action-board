@@ -55,7 +55,7 @@ export class JenkinsService {
     const newActionItems: ActionItem[] = [];
     JENKINS_ENV.forEach((url) => {
       const promise = this.http.get(
-        url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,duration,timestamp,result,url]]',
+        url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,estimatedDuration,timestamp,result,url],lastBuild[number,timestamp]]',
         this.options)
         .toPromise()
         .then((response) => this.processJobs(response, newActionItems))
@@ -76,15 +76,20 @@ export class JenkinsService {
 
   private addNewActionItem(job, newActionItems) {
     const lastCompletedBuild = job.lastCompletedBuild;
+    const jobDetails = new JobDetails();
     if (lastCompletedBuild) {
       if (this.includeJob(job)) {
         const jobStatus = lastCompletedBuild.result;
-        const jobDetails = new JobDetails();
         jobDetails.result = jobStatus;
         jobDetails.jobName = job.name;
-        jobDetails.timestamp = lastCompletedBuild.timestamp;
+        jobDetails.estimatedDuration = lastCompletedBuild.duration;
+        jobDetails.timestampLastCompletedBuild = lastCompletedBuild.timestamp;
         jobDetails.building = this.isBuilding(job);
         jobDetails.url = lastCompletedBuild.url;
+        const lastBuild = job.lastBuild;
+        if (lastBuild && jobDetails.building) {
+          jobDetails.timestampCurrentBuild = lastBuild.timestamp;
+        }
         newActionItems.push(this.convertToActionItem(jobDetails));
       }
     }
@@ -110,10 +115,11 @@ export class JenkinsService {
       priority: 0,
       type: this.buildTypeString(jobDetails),
       source: 'jenkins',
-      created: new Date(jobDetails.timestamp).getTime(),
+      created: new Date(jobDetails.timestampLastCompletedBuild).getTime(),
       url: jobDetails.url,
       do_not_merge: false,
-      building: jobDetails.building
+      building: jobDetails.building,
+      buildPercentage: this.evaluateBuildPercentage(jobDetails)
     });
   }
 
@@ -125,5 +131,14 @@ export class JenkinsService {
 
   private buildTypeString(jobDetails: JobDetails): string {
     return 'Jenkins Build ' + (jobDetails.building ? ' - building' : ' - ' + jobDetails.result);
+  }
+
+  private evaluateBuildPercentage(jobDetails: JobDetails): number {
+    if (jobDetails.building) {
+      const elapsedDuration = Date.now() - parseInt(jobDetails.timestampCurrentBuild, 10);
+      return Math.min(5, Math.floor((elapsedDuration * 100) / parseInt(jobDetails.estimatedDuration, 10)));
+    } else {
+      return null;
+    }
   }
 }

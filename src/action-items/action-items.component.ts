@@ -115,6 +115,10 @@ export class ActionItemsComponent implements OnInit {
     return moment(time).fromNow();
   }
 
+  getProgressBarPercent(percentage) {
+    return `${percentage}%`;
+  }
+
   shouldShowEmptyBoardCongrats() {
     return this.showEmptyBoardCongrats;
   }

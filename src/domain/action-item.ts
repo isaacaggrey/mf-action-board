@@ -8,4 +8,5 @@ export class ActionItem {
   do_not_merge: boolean;
   model?: string;
   building?: boolean;
+  buildPercentage?: number;
 }

@@ -1,7 +1,9 @@
 export class JobDetails {
   result: string;
-  timestamp: string;
+  timestampLastCompletedBuild: string;
+  timestampCurrentBuild: string;
   jobName: string;
   building: boolean;
+  estimatedDuration: string;
   url: string;
 }

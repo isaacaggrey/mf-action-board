@@ -30,7 +30,13 @@
           <div class="action-item-content">
             <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
             <div class="action-item-text col-sm-10">{{ actionItem.name }}
-              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+              <div class="time-elapsed-and-progress-bar-wrapper">
+                <div class="time-elapsed-in-wrapper">{{ this.getTimeElapsed(actionItem.created) }}
+                </div>
+                <div *ngIf="actionItem.building" class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': getProgressBarPercent(actionItem.buildPercentage)}"> </div>
+                </div>
+              </div>
             </div>
             <div class="col-sm-1">
               <img class="rage-face" src="../assets/red-face.png">
@@ -62,7 +68,13 @@
           <div class="action-item-content">
             <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
             <div class="action-item-text col-sm-10">{{ actionItem.name }}
-              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+              <div class="time-elapsed-and-progress-bar-wrapper">
+                <div class="time-elapsed-in-wrapper">{{ this.getTimeElapsed(actionItem.created) }}
+                </div>
+                <div *ngIf="actionItem.building" class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': getProgressBarPercent(actionItem.buildPercentage)}"> </div>
+                </div>
+              </div>
             </div>
             <div class="col-sm-1">
               <img class="rage-face" src="../assets/orange-face.png">
@@ -93,7 +105,13 @@
           <div class="action-item-content">
             <div class="col-sm-1"><i class="icon fa fa-building fa-4x"></i></div>
             <div class="action-item-text col-sm-10">{{ actionItem.name }}
-              <div class="time-elapsed">{{ this.getTimeElapsed(actionItem.created) }}</div>
+              <div class="time-elapsed-and-progress-bar-wrapper">
+                <div class="time-elapsed-in-wrapper">{{ this.getTimeElapsed(actionItem.created) }}
+                </div>
+                <div *ngIf="actionItem.building" class="progress">
+                  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': getProgressBarPercent(actionItem.buildPercentage)}"> </div>
+                </div>
+              </div>
             </div>
             <div class="col-sm-1">
               <img class="rage-face" src="../assets/yellow-face.png">
