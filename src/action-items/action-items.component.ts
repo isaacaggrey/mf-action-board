@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { GithubConfig } from '../domain/github-config';
 import { ACTION_ITEM_POLLING_INTERVAL_IN_MS } from '../config/app-config-constants';
 import { ConfigService } from '../config/config.service';
+import { NotificationsService } from '../notifications/services/notifications.service';
 
 @Component({
   selector: 'action-items',
@@ -14,7 +15,7 @@ import { ConfigService } from '../config/config.service';
   styleUrls: ['./action-items.component.css']
 })
 export class ActionItemsComponent implements OnInit {
-  actionItems: ActionItem[];
+  actionItems: ActionItem[] = [];
   showEmptyBoardCongrats = false;
   githubConfig: GithubConfig = this.configService.githubConfig;
   pollIntervalHandle;
@@ -23,10 +24,12 @@ export class ActionItemsComponent implements OnInit {
 
   constructor(private githubService: GithubService,
               private jenkinsService: JenkinsService,
-              private configService: ConfigService) {
+              private configService: ConfigService,
+              private notificationsService: NotificationsService) {
   }
 
   ngOnInit() {
+    this.notificationsService.setUpNoties();
     this.configService.loadConfigFromStorage();
     if (this.configService.isConfigured()) {
       this.isConfiguring = false;
@@ -46,6 +49,29 @@ export class ActionItemsComponent implements OnInit {
         }, ACTION_ITEM_POLLING_INTERVAL_IN_MS);
       });
     }
+  }
+
+  getActionItemsList(): void {
+    Promise.all([this.githubService.getActionItems(), this.jenkinsService.getActionItems()]).then(
+      actionItems => {
+        const oldActionItems = this.actionItems;
+        this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
+        const newActionItems = this.getNewActionItems(oldActionItems, this.actionItems);
+        this.notificationsService.notifyNewActionItems(newActionItems);
+        this.checkIfShouldDisplayEmptyBoardCongrats();
+      }
+    );
+  }
+
+  private getNewActionItems(oldActionItems: ActionItem[], nextActionItems: ActionItem[]) {
+    const oldActionItemMap = oldActionItems.reduce((map, actionItem) => {
+      map[actionItem.name] = actionItem;
+      return map;
+    }, {});
+    const newActionItems = nextActionItems.filter((actionItem) => {
+      return !oldActionItemMap.hasOwnProperty(actionItem.name);
+    });
+    return newActionItems;
   }
 
   private loadConfig() {
@@ -92,15 +118,6 @@ export class ActionItemsComponent implements OnInit {
 
   getDisplayChangeConfigButton() {
     return !this.isConfiguring;
-  }
-
-  getActionItemsList(): void {
-    Promise.all([this.githubService.getActionItems(), this.jenkinsService.getActionItems()]).then(
-      actionItems => {
-        this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
-        this.checkIfShouldDisplayEmptyBoardCongrats();
-      }
-    );
   }
 
   isConfigured() {

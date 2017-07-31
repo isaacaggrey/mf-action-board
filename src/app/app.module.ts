@@ -9,6 +9,7 @@ import { ActionItemsComponent } from '../action-items/action-items.component';
 import { JenkinsService } from '../jenkins/services/jenkins.service';
 import { GithubService } from '../github/services/github.service';
 import { ConfigService } from '../config/config.service';
+import { NotificationsService } from '../notifications/services/notifications.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { ConfigService } from '../config/config.service';
     FormsModule,
     HttpModule
   ],
-  providers: [JenkinsService, GithubService, ConfigService],
+  providers: [JenkinsService, GithubService, ConfigService, NotificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
