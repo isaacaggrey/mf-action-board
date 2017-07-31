@@ -82,7 +82,7 @@ export class JenkinsService {
         const jobStatus = lastCompletedBuild.result;
         jobDetails.result = jobStatus;
         jobDetails.jobName = job.name;
-        jobDetails.estimatedDuration = lastCompletedBuild.duration;
+        jobDetails.estimatedDuration = lastCompletedBuild.estimatedDuration;
         jobDetails.timestampLastCompletedBuild = lastCompletedBuild.timestamp;
         jobDetails.building = this.isBuilding(job);
         jobDetails.url = lastCompletedBuild.url;
