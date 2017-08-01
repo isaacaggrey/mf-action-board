@@ -55,7 +55,7 @@ export class JenkinsService {
     const newActionItems: ActionItem[] = [];
     JENKINS_ENV.forEach((url) => {
       const promise = this.http.get(
-        url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,estimatedDuration,timestamp,result,url],lastBuild[number,timestamp]]',
+        url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,timestamp,result,url],lastBuild[number,timestamp,estimatedDuration]]',
         this.options)
         .toPromise()
         .then((response) => this.processJobs(response, newActionItems))
@@ -82,11 +82,11 @@ export class JenkinsService {
         const jobStatus = lastCompletedBuild.result;
         jobDetails.result = jobStatus;
         jobDetails.jobName = job.name;
-        jobDetails.estimatedDuration = lastCompletedBuild.estimatedDuration;
         jobDetails.timestampLastCompletedBuild = lastCompletedBuild.timestamp;
         jobDetails.building = this.isBuilding(job);
         jobDetails.url = lastCompletedBuild.url;
         const lastBuild = job.lastBuild;
+        jobDetails.estimatedDuration = lastBuild.estimatedDuration;
         if (lastBuild && jobDetails.building) {
           jobDetails.timestampCurrentBuild = lastBuild.timestamp;
         }
@@ -136,7 +136,7 @@ export class JenkinsService {
   private evaluateBuildPercentage(jobDetails: JobDetails): number {
     if (jobDetails.building) {
       const elapsedDuration = Date.now() - parseInt(jobDetails.timestampCurrentBuild, 10);
-      return Math.min(5, Math.floor((elapsedDuration * 100) / parseInt(jobDetails.estimatedDuration, 10)));
+      return Math.max(5, Math.floor((elapsedDuration * 100) / parseInt(jobDetails.estimatedDuration, 10)));
     } else {
       return null;
     }
