@@ -8,7 +8,6 @@
 
 .action-item-panel {
   border-radius: 25px;
-  text-shadow: 2px 2px 5px black;
   text-align: left;
 }
 
@@ -22,7 +21,7 @@
 }
 
 .action-item-panel.yellow {
-  background-color: #ffe52f;
+  background-color: #ffff00;
 }
 
 .action-item-panel.orange {
@@ -30,7 +29,7 @@
 }
 
 .action-item-panel.red {
-  background-color: #900;
+  background-color: #ff1a1a;
 }
 
 .action-item-panel.blue {
@@ -40,6 +39,8 @@
 .action-item-text {
   font-family: Helvetica, sans-serif;
   font-size: 45px;
+  color: black;
+  font-weight: bold;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -51,6 +52,7 @@ input.action-item-config {
 
 .icon {
   padding-right: 20px;
+  text-shadow: 2px 2px 5px black;
 }
 
 .buffer {
