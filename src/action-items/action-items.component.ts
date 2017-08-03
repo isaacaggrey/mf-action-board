@@ -20,6 +20,7 @@ export class ActionItemsComponent implements OnInit {
   githubConfig: GithubConfig = this.configService.githubConfig;
   pollIntervalHandle;
   isConfiguring: boolean;
+  isBoardUpdating = this.configService.boardUpdating;
   private configActionItems: ActionItem[] = this.loadConfigActionItems();
 
   constructor(private githubService: GithubService,
@@ -45,6 +46,7 @@ export class ActionItemsComponent implements OnInit {
       this.jenkinsService.loadRepos().then(() => {
         this.getActionItemsList();
         this.pollIntervalHandle = setInterval(() => {
+          this.configService.checkForRefresh();
           this.getActionItemsList();
         }, ACTION_ITEM_POLLING_INTERVAL_IN_MS);
       });

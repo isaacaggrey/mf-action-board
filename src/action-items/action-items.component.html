@@ -5,6 +5,11 @@
   id="teamUsingBoard">
   {{getTeamUsingBoard()}}
 </span>
+<span
+  *ngIf="isBoardUpdating.isIt"
+  id="boardUpdatingMessage">
+  Updating Board
+</span>
 
 <div class="action-item-list">
   <div class="row" *ngFor="let actionItem of actionItems">
