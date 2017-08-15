@@ -104,6 +104,7 @@ export class JenkinsService {
     const jobType = jobName.substring(jobName.indexOf('_') + 1, jobName.length);
     const jobNameToBuildName = jobName.substring(0, jobName.indexOf('_'));
     return jobType !== 'release'
+      && jobType !== 'promote'
       && job.color !== 'disabled'
       && this.repoNames[jobNameToBuildName]
       && job.lastCompletedBuild.result === 'FAILURE';
