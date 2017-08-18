@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { APP_LABELS } from './app.constants';
 
 @Component({
-  selector: 'app-root',
+  selector: 'mf-app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Action Item Dashboard';
+  title = APP_LABELS.TITLE;
 }

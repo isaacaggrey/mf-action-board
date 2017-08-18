@@ -8,6 +8,7 @@ import { GithubConfig } from '../domain/github-config';
 import { ACTION_ITEM_POLLING_INTERVAL_IN_MS } from '../config/app-config-constants';
 import { ConfigService } from '../config/config.service';
 import { NotificationsService } from '../notifications/services/notifications.service';
+import { CONFIG } from './action-items.constants';
 
 @Component({
   selector: 'mf-action-items',
@@ -82,10 +83,10 @@ export class ActionItemsComponent implements OnInit {
 
   private loadConfigActionItems(): ActionItem[] {
     const configActionItems = [];
-    configActionItems.push(this.createConfigActionItem('GitHub Team Name', 'team'));
-    configActionItems.push(this.createConfigActionItem('GitHub Team ID', 'teamId'));
-    configActionItems.push(this.createConfigActionItem('GitHub User Name', 'userName'));
-    configActionItems.push(this.createConfigActionItem('GitHub Token', 'token'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.TEAM, 'team'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.TEAM_ID, 'teamId'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.USER_NAME, 'userName'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.TOKEN, 'token'));
     return configActionItems;
   }
 

@@ -10,6 +10,7 @@ import { FakeGithubService } from '../testing/FakeGithubService';
 import { FakeJenkinsService } from '../testing/FakeJenkinsService';
 import { FakeNotificationsService } from '../testing/FakeNotificationsService';
 import { FakeConfigService } from '../testing/FakeConfigService';
+import { CONFIG } from './action-items.constants';
 
 const actionItemTextClass = '.action-item-text';
 let compiled;
@@ -54,10 +55,10 @@ describe('Action Items', () => {
         }));
 
         it('should show the configuration action items', async(() => {
-            expect(componentElements.actionItemLabels(0)).toContain('GitHub Team Name');
-            expect(componentElements.actionItemLabels(1)).toContain('GitHub Team ID');
-            expect(componentElements.actionItemLabels(2)).toContain('GitHub User Name');
-            expect(componentElements.actionItemLabels(3)).toContain('GitHub Token');
+            expect(componentElements.actionItemLabels(0)).toContain(CONFIG.TEAM);
+            expect(componentElements.actionItemLabels(1)).toContain(CONFIG.TEAM_ID);
+            expect(componentElements.actionItemLabels(2)).toContain(CONFIG.USER_NAME);
+            expect(componentElements.actionItemLabels(3)).toContain(CONFIG.TOKEN);
         }));
     });
 

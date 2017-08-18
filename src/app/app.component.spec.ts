@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { Component } from '@angular/core';
+import { APP_LABELS } from './app.constants';
 
 let compiled;
 let fixture;
@@ -15,7 +16,7 @@ describe('App Component', () => {
       compiled = createComponent();
     });
     it('should render title', () => {
-      expect(componentElements.applicationTitle().textContent).toContain('Action Item Dashboard');
+      expect(componentElements.applicationTitle().textContent).toContain(APP_LABELS.TITLE);
     });
 });
 
