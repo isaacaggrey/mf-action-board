@@ -10,7 +10,7 @@ import { ConfigService } from '../config/config.service';
 import { NotificationsService } from '../notifications/services/notifications.service';
 
 @Component({
-  selector: 'action-items',
+  selector: 'mf-action-items',
   templateUrl: './action-items.component.html',
   styleUrls: ['./action-items.component.css']
 })
@@ -143,19 +143,19 @@ export class ActionItemsComponent implements OnInit {
   }
 
   sortByPriorityAndOpenDuration(actionItems: ActionItem[]): ActionItem[] {
-    const red = actionItems.filter(function (a) {
+    const red = actionItems.filter((a) => {
       return a.priority === 1;
     });
 
-    const orange = actionItems.filter(function (a) {
+    const orange = actionItems.filter((a) => {
       return a.priority === 2;
     });
 
-    const yellow = actionItems.filter(function (a) {
+    const yellow = actionItems.filter((a) => {
       return a.priority === 3;
     });
 
-    const grey = actionItems.filter(function (a) {
+    const grey = actionItems.filter((a) => {
       return a.priority === 4;
     });
 
