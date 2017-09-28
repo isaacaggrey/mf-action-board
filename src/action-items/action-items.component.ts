@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ActionItem } from '../domain/action-item';
 import { GithubService } from '../github/services/github.service';
+import { VstsService } from '../github/services/vsts.service';
 import { JenkinsService } from '../jenkins/services/jenkins.service';
 import * as moment from 'moment';
 import { GithubConfig } from '../domain/github-config';
@@ -25,6 +26,7 @@ export class ActionItemsComponent implements OnInit {
   private configActionItems: ActionItem[] = this.loadConfigActionItems();
 
   constructor(private githubService: GithubService,
+              private vstsService: VstsService,
               private jenkinsService: JenkinsService,
               private configService: ConfigService,
               private notificationsService: NotificationsService) {
@@ -55,7 +57,15 @@ export class ActionItemsComponent implements OnInit {
   }
 
   getActionItemsList(): void {
-    Promise.all([this.githubService.getActionItems(), this.jenkinsService.getActionItems()]).then(
+    const promises: Promise<ActionItem[]>[] = [];
+    if (this.configService.github.isConfigured()) {
+      promises.push(this.githubService.getActionItems());
+      promises.push(this.jenkinsService.getActionItems());
+    }
+    if (this.configService.vsts.isConfigured()) {
+      promises.push(this.vstsService.getActionItems());
+    }
+    Promise.all(promises).then(
       actionItems => {
         const oldActionItems = this.actionItems;
         this.actionItems = this.sortByPriorityAndOpenDuration(Array.prototype.concat.apply([], actionItems));
@@ -83,10 +93,13 @@ export class ActionItemsComponent implements OnInit {
 
   private loadConfigActionItems(): ActionItem[] {
     const configActionItems = [];
-    configActionItems.push(this.createConfigActionItem(CONFIG.TEAM, 'team'));
-    configActionItems.push(this.createConfigActionItem(CONFIG.TEAM_ID, 'teamId'));
-    configActionItems.push(this.createConfigActionItem(CONFIG.USER_NAME, 'userName'));
-    configActionItems.push(this.createConfigActionItem(CONFIG.TOKEN, 'token'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.GIT_HUB.TEAM, 'github.team'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.GIT_HUB.TEAM_ID, 'github.teamId'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.GIT_HUB.USER_NAME, 'github.userName'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.GIT_HUB.TOKEN, 'github.token'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.VSTS.USERNAME, 'vsts.username'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.VSTS.TOKEN, 'vsts.token'));
+    configActionItems.push(this.createConfigActionItem(CONFIG.VSTS.TEAM, 'vsts.team'));
     return configActionItems;
   }
 
@@ -128,7 +141,7 @@ export class ActionItemsComponent implements OnInit {
   }
 
   getTeamUsingBoard() {
-    return this.configService.getConfig().team;
+    return this.configService.github.team;
   }
 
   getTimeElapsed(time) {
@@ -174,6 +187,16 @@ export class ActionItemsComponent implements OnInit {
     } else {
       return 0;
     }
+  }
+
+  saveConfigValue(key, newValue) {
+    const [configType, configName] = key.split('.');
+    this.configService.setConfigValue(configType, configName, newValue);
+  }
+
+  getConfigValue(key) {
+    const [configType, configName] = key.split('.');
+    return this.configService.getConfigValue(configType, configName);
   }
 
   private checkIfShouldDisplayEmptyBoardCongrats() {

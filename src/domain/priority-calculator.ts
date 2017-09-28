@@ -8,7 +8,7 @@ export class PriorityCalculator {
   static JENKINS_ACTION_ITEM_SLA: number = JENKINS_ACTION_ITEM_SLA_MS;
 
   static calculatePriority(actionItem: ActionItem): ActionItem {
-    if (actionItem.source === 'github') {
+    if (actionItem.source === 'pr') {
       this.calculatePriorityForGitHubActionItem(actionItem);
     } else if (actionItem.source === 'jenkins') {
       this.calculatePriorityForJenkinsActionItem(actionItem);

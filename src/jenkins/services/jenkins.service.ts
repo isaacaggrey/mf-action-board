@@ -22,8 +22,8 @@ export class JenkinsService {
   }
 
   private init() {
-    const mfGithubUsername = this.configService.getConfig().userName;
-    const mfGithubToken = this.configService.getConfig().token;
+    const mfGithubUsername = this.configService.github.userName;
+    const mfGithubToken = this.configService.github.token;
     this.options = new RequestOptions({
       headers: new Headers({'Authorization': 'Basic ' + window.btoa(mfGithubUsername + ':' + mfGithubToken)})
     });
@@ -31,7 +31,7 @@ export class JenkinsService {
 
   loadRepos() {
     this.init();
-    const mfGithubTeamId = this.configService.getConfig().teamId;
+    const mfGithubTeamId = this.configService.github.teamId;
     return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.options)
       .toPromise()
       .then((response) => {

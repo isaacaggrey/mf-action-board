@@ -8,6 +8,7 @@ import { ActionItemsComponent } from '../action-items/action-items.component';
 
 import { JenkinsService } from '../jenkins/services/jenkins.service';
 import { GithubService } from '../github/services/github.service';
+import { VstsService } from '../github/services/vsts.service';
 import { ConfigService } from '../config/config.service';
 import { NotificationsService } from '../notifications/services/notifications.service';
 
@@ -21,7 +22,7 @@ import { NotificationsService } from '../notifications/services/notifications.se
     FormsModule,
     HttpModule
   ],
-  providers: [JenkinsService, GithubService, ConfigService, NotificationsService],
+  providers: [JenkinsService, GithubService, VstsService, ConfigService, NotificationsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -4,23 +4,27 @@ import { ActionItemsComponent } from './action-items.component';
 import { FormsModule } from '@angular/forms';
 import { GithubService } from '../github/services/github.service';
 import { JenkinsService } from '../jenkins/services/jenkins.service';
+import { VstsService } from '../github/services/vsts.service';
 import { ConfigService } from '../config/config.service';
 import { NotificationsService } from '../notifications/services/notifications.service';
 import { FakeGithubService } from '../testing/FakeGithubService';
 import { FakeJenkinsService } from '../testing/FakeJenkinsService';
 import { FakeNotificationsService } from '../testing/FakeNotificationsService';
+import { FakeVstsService } from '../testing/FakeVstsService';
 import { FakeConfigService } from '../testing/FakeConfigService';
 import { CONFIG } from './action-items.constants';
+import {GithubConfig} from '../domain/github-config';
 
 const actionItemTextClass = '.action-item-text';
 let compiled;
 let fixture;
 let isConfigured = false;
-const mockConfig = {
+const mockConfig: GithubConfig = {
     team: 'bros',
     teamId: '1010101',
     userName: 'dude bro',
-    token: 'goober'
+    token: 'goober',
+    isConfigured: () => true
 };
 const mockJenkinsJob = {
     name: 'search-int-tests_int-apps',
@@ -36,7 +40,7 @@ const mockPrReview = {
     name: 'segments',
     priority: 2,
     type: 'PR Review',
-    source: 'github',
+    source: 'pr',
     created: 1502982366420,
     url: 'http://www.french-fries.com',
     do_not_merge: false
@@ -55,10 +59,10 @@ describe('Action Items', () => {
         }));
 
         it('should show the configuration action items', async(() => {
-            expect(componentElements.actionItemLabels(0)).toContain(CONFIG.TEAM);
-            expect(componentElements.actionItemLabels(1)).toContain(CONFIG.TEAM_ID);
-            expect(componentElements.actionItemLabels(2)).toContain(CONFIG.USER_NAME);
-            expect(componentElements.actionItemLabels(3)).toContain(CONFIG.TOKEN);
+            expect(componentElements.actionItemLabels(0)).toContain(CONFIG.GIT_HUB.TEAM);
+            expect(componentElements.actionItemLabels(1)).toContain(CONFIG.GIT_HUB.TEAM_ID);
+            expect(componentElements.actionItemLabels(2)).toContain(CONFIG.GIT_HUB.USER_NAME);
+            expect(componentElements.actionItemLabels(3)).toContain(CONFIG.GIT_HUB.TOKEN);
         }));
     });
 
@@ -107,6 +111,7 @@ function createComponent() {
             { provide: GithubService, useClass: FakeGithubService},
             { provide: JenkinsService, useClass: FakeJenkinsService},
             { provide: ConfigService, useClass: FakeConfigService},
+            { provide: VstsService, useClass: FakeVstsService},
             { provide: NotificationsService, useClass: FakeNotificationsService}
         ]
     }).compileComponents();
