@@ -179,4 +179,15 @@ export class ActionItemsComponent implements OnInit {
   private checkIfShouldDisplayEmptyBoardCongrats() {
     this.showEmptyBoardCongrats = this.actionItems.length === 0;
   }
+
+  public getRandomGratsImage() {
+    const gratsImages = ['carolineLIT.jpg', 'dabulous_sprint.gif'];
+    return gratsImages[this.getRandomInt(0, gratsImages.length - 1)];
+  }
+
+  private getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 }
