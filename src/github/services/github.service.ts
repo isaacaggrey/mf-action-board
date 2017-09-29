@@ -10,8 +10,28 @@ import { DO_NOT_MERGE_LABEL_NAME } from './github.constants';
 @Injectable()
 export class GithubService {
 
-  constructor(private http: Http, private configService: ConfigService) {
+  constructor(private http: Http, private configService: ConfigService) {}
+
+  loadRepos() {
+    const mfGithubTeamId = this.configService.githubConfig.teamId;
+    return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.configService.options)
+      .toPromise()
+      .then((response) => {
+        const repos = response.json();
+        const reposNoForks = repos.filter((repo) => {
+          return repo.owner.login === 'blackbaud';
+        });
+        this.configService.repos = reposNoForks
+          .map((repo) => {
+            return repo.name;
+          })
+          .reduce((map, repoName) => {
+            map[repoName] = repoName;
+            return map;
+          }, {});
+      });
   }
+
 
   getActionItems(): Promise<ActionItem[]> {
     if (!this.configService.github.isConfigured()) {

@@ -46,7 +46,7 @@ export class ActionItemsComponent implements OnInit {
 
   private loadActionItems() {
     if (this.configService.isConfigured()) {
-      this.jenkinsService.loadRepos().then(() => {
+      this.githubService.loadRepos().then(() => {
         this.getActionItemsList();
         this.pollIntervalHandle = setInterval(() => {
           this.configService.checkForRefresh();

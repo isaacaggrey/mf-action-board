@@ -4,7 +4,7 @@ import { VstsConfig } from '../domain/vsts-config';
 import { MF_GITHUB_TEAM, MF_GITHUB_TEAM_ID,
   MF_GITHUB_TOKEN, MF_GITHUB_USERNAME,
   MF_VSTS_USERNAME, MF_VSTS_TOKEN, MF_VSTS_TEAM } from './app-config-constants';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -12,6 +12,8 @@ export class ConfigService {
   githubConfig = new GithubConfig();
   private vstsConfig = new VstsConfig();
   private appLastModified = new Date();
+  public repos;
+  public options: RequestOptions;
   public boardUpdating = { isIt: false };
   constructor(private http: Http) {
   }
@@ -36,6 +38,9 @@ export class ConfigService {
     this.vstsConfig.username = localStorage.getItem(MF_VSTS_USERNAME);
     this.vstsConfig.token = localStorage.getItem(MF_VSTS_TOKEN);
     this.vstsConfig.team = localStorage.getItem(MF_VSTS_TEAM);
+    this.options = new RequestOptions({
+      headers: new Headers({'Authorization': 'Basic ' + window.btoa(this.githubConfig.userName + ':' + this.githubConfig.token)})
+    });
   }
 
   public saveConfig(): void {

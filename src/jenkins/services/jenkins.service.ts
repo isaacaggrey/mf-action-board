@@ -5,7 +5,6 @@ import 'rxjs/add/operator/toPromise';
 import { JobDetails } from '../../domain/jobDetails';
 import { ActionItem } from '../../domain/action-item';
 import { PriorityCalculator } from '../../domain/priority-calculator';
-import { Headers, RequestOptions } from '@angular/http';
 
 import {
   JENKINS_JOB_BUILDING_COLOR, JENKINS_ENV
@@ -14,41 +13,8 @@ import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class JenkinsService {
-  private repoNames: string[];
-  private options: RequestOptions;
 
-  constructor(private http: Http, private configService: ConfigService) {
-    this.repoNames = [];
-  }
-
-  private init() {
-    const mfGithubUsername = this.configService.github.userName;
-    const mfGithubToken = this.configService.github.token;
-    this.options = new RequestOptions({
-      headers: new Headers({'Authorization': 'Basic ' + window.btoa(mfGithubUsername + ':' + mfGithubToken)})
-    });
-  }
-
-  loadRepos() {
-    this.init();
-    const mfGithubTeamId = this.configService.github.teamId;
-    return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.options)
-      .toPromise()
-      .then((response) => {
-        const repos = response.json();
-        const reposNoForks = repos.filter((repo) => {
-          return repo.owner.login === 'blackbaud';
-        });
-        this.repoNames = reposNoForks
-          .map((repo) => {
-            return repo.name;
-          })
-          .reduce((map, repoName) => {
-            map[repoName] = repoName;
-            return map;
-          }, {});
-      });
-  }
+  constructor(private http: Http, private configService: ConfigService) {}
 
   getActionItems(): Promise<ActionItem[]> {
     const envPromises = [];
@@ -56,7 +22,7 @@ export class JenkinsService {
     JENKINS_ENV.forEach((url) => {
       const promise = this.http.get(
         url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,timestamp,result,url],lastBuild[number,timestamp,estimatedDuration]]',
-        this.options)
+        this.configService.options)
         .toPromise()
         .then((response) => this.processJobs(response, newActionItems))
         .catch(this.handleError);
@@ -106,7 +72,7 @@ export class JenkinsService {
     return jobType !== 'release'
       && jobType !== 'promote'
       && job.color !== 'disabled'
-      && this.repoNames[jobNameToBuildName]
+      && this.configService.repos[jobNameToBuildName]
       && job.lastCompletedBuild.result === 'FAILURE';
   }
 
