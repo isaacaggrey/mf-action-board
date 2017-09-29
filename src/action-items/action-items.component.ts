@@ -141,7 +141,7 @@ export class ActionItemsComponent implements OnInit {
   }
 
   getTeamUsingBoard() {
-    return this.configService.github.team;
+    return this.configService.vsts.team || this.configService.github.team || 'Unknown';
   }
 
   getTimeElapsed(time) {

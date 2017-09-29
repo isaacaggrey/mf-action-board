@@ -29,13 +29,13 @@ export class VstsService {
     const authToken = window.btoa(`${username}:${token}`);
     const headers = new Headers({'Authorization': `Basic ${authToken}`});
     const options = new RequestOptions({headers: headers});
-    const promises = repos.map(repo => {
+    const promises: Promise<ActionItem[]>[] = repos.map(repo => {
       return this.http.get(this.prUrl(repo), options)
         .toPromise()
         .then(response => response.json().value.map((item => this.convertToActionItem(item))))
         .catch(this.handleError);
     });
-    return Promise.all(promises);
+    return Promise.all(promises).then(repoItems => repoItems[0].concat(repoItems[1]));
   }
 
   private convertToActionItem(pr: any): ActionItem {
