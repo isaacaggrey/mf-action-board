@@ -13,6 +13,9 @@ export class GithubService {
   constructor(private http: Http, private configService: ConfigService) {}
 
   loadRepos() {
+    if (!this.configService.github.isConfigured()) {
+      return this.handleError('Ignoring GitHub calls since not configured');
+    }
     const mfGithubTeamId = this.configService.githubConfig.teamId;
     return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.configService.options)
       .toPromise()

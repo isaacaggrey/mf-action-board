@@ -14,9 +14,11 @@ Within this project's directory, run the following commands
 
 ## Configuration of board
 
+### GitHub
+
 * Username
   * Either personal or new user that is a member of your team (we rely on GitHub team repo association to get builds!!)
-* Github api token 
+* Github api token
   * account settings -> personal access tokens
 * Team ID
   * `curl -u <username>:<github-api-token> https://api.github.com/user/teams | grep '"name": "<teamname>"' -A 3`
@@ -24,11 +26,18 @@ Within this project's directory, run the following commands
   * get team id from the property `"id": <id>`
 * Team Name
   * Self explanatory: `blackbaud/<teamname>`
-  
 * GitHub team repo association cleanup
   * This task is a must do if you'd like to only see builds your team owns.
   * Find someone with super admin access to GitHub and request that they remove access rights to all repos your team does not care about the builds for.  They must have super access since you can't modify collaborators of projects your team is not admins of.
     * i.e. micro-cervezas had read access to `blackbaud/alfred`. New policy is members of the blackbaud org have read access to all repos in org, this is no longer needed.
+
+### VSTS
+
+* Username: The login you use for VSTS, usually an email.
+* Token: A personal access token set up with `code:read` permissions. A token can be created
+  via your user's [Security](https://blackbaud.visualstudio.com/_details/security/tokens) settings.
+* Team: The name of your team, which is used to determine which repos to query for.
+  The team name should match what's in `vsts-repos.ts`. In the future this will likely be a dropdown.
 
 ## Development server
 
