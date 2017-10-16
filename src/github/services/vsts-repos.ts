@@ -11,5 +11,10 @@ export const VSTS_REPOS = {
   'we-are-batman': [
     'skyux-spa-workflows',
     'workflow-designer'
+  ],
+  'brady-bunch': [
+    'social-posting',
+    'token-store',
+    'skyux-spa-social'
   ]
 };
