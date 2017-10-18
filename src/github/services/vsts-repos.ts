@@ -6,7 +6,8 @@ export const VSTS_REPOS = {
     'bluemoon-admin-login',
     'bluemoon-config-server',
     'java-project-builder',
-    'skyux-routes-long'
+    'skyux-routes-long',
+    'social-donation-receiver'
   ],
   'we-are-batman': [
     'skyux-spa-workflows',
