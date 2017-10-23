@@ -11,7 +11,8 @@ export const VSTS_REPOS = {
   ],
   'we-are-batman': [
     'skyux-spa-workflows',
-    'workflow-designer'
+    'workflow-designer',
+    'azure-scheduler-sdk'
   ],
   'brady-bunch': [
     'social-posting',
