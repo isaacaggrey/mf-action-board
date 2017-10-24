@@ -8,7 +8,7 @@
           <div class="time-elapsed-in-wrapper">{{ getTimeElapsed(build.created) }}
           </div>
           <div *ngIf="build.building" class="progress">
-            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': getProgressBarPercent(build.buildPercentage)}"> </div>
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': build.buildPercentage+'%'}"> </div>
           </div>
         </div>
       </div>
