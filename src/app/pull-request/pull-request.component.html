@@ -1,0 +1,13 @@
+<div class="col-sm-12 action-item-panel buffer" [ngClass]="priorityClass">
+  <a href="{{pr.url}}" target="_blank">
+    <div class="action-item-content">
+      <div class="col-sm-1"><i class="icon fa fa-code-fork fa-4x"></i></div>
+      <div class="action-item-text col-sm-10">{{pr.name}}
+        <div class="time-elapsed">{{getTimeElapsed(pr.created)}}</div>
+      </div>
+      <div class="col-sm-1">
+        <mf-rage-face [priority]="pr.priority"></mf-rage-face>
+      </div>
+    </div>
+  </a>
+</div>

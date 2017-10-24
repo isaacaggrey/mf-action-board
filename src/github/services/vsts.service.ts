@@ -4,8 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 import { ConfigService } from '../../config/config.service';
 import { VSTS_REPOS } from './vsts-repos';
-import { ActionItem } from '../../domain/action-item';
-import { PriorityCalculator } from '../../domain/priority-calculator';
+import { ActionItem, VstsPullRequest, PullRequest} from '../../domain/action-item';
 
 @Injectable()
 export class VstsService {
@@ -32,24 +31,10 @@ export class VstsService {
     const promises: Promise<ActionItem[]>[] = repos.map(repo => {
       return this.http.get(this.prUrl(repo), options)
         .toPromise()
-        .then(response => response.json().value.map((item => this.convertToActionItem(item))))
+        .then(response => response.json().value.map((item => new VstsPullRequest(item))))
         .catch(this.handleError);
     });
     return Promise.all(promises).then(repoItems => repoItems[0].concat(repoItems[1]));
-  }
-
-  private convertToActionItem(pr: any): ActionItem {
-    const repo = pr.repository.name;
-    const html_url = `${this.ROOTURL}/_git/${repo}/pullrequest/${pr.pullRequestId}`;
-    return PriorityCalculator.calculatePriority({
-      name: `${repo}: ${pr.title}`,
-      priority: 0,
-      type: 'Open PR',
-      source: 'pr',
-      created: new Date(pr.creationDate).getTime(),
-      url: html_url,
-      do_not_merge: false
-    });
   }
 
   private handleError(error: any): Promise<any> {

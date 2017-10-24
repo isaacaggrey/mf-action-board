@@ -1,0 +1,25 @@
+<div class="col-md-12 row labelBar">
+  <div class="col-md-1">
+    <span class="label label-default">{{team}}</span>
+  </div>
+  <div class="col-md-10"></div>
+  <div class="col-md-1">
+    <span class="label label-default" *ngIf="loading">
+      <i class="fa fa-spinner">Loading</i>
+    </span>
+  </div>
+</div>
+
+<div class="action-item-list" *ngIf="lastCount > 0">
+  <div *ngFor="let actionItem of actionItems">
+    <div *ngIf="actionItem.type === 'pr'">
+      <mf-pull-request [pr]="actionItem"></mf-pull-request>
+    </div>
+
+    <div *ngIf="actionItem.type === 'build'">
+      <mf-build [build]="actionItem"></mf-build>
+    </div>
+  </div>
+</div>
+
+<mf-sprint-lit *ngIf="lastCount == 0"></mf-sprint-lit>

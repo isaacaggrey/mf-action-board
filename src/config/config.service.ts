@@ -14,7 +14,6 @@ export class ConfigService {
   private appLastModified = new Date();
   public repos;
   public options: RequestOptions;
-  public boardUpdating = { isIt: false };
   constructor(private http: Http) {
   }
 
@@ -67,13 +66,13 @@ export class ConfigService {
     }
   }
 
+// TODO move to some sort of refresh service
   public checkForRefresh() {
     const siteUrl = window.location.href;
     this.http.head(siteUrl)
       .map(response => response.headers.get('Last-Modified'))
       .subscribe(lastModifiedHeader => {
         if (this.isTimeToRefreshPage(this.appLastModified, new Date(lastModifiedHeader))) {
-          this.boardUpdating.isIt = true;
           setTimeout(() => {
             window.location.reload();
           }, 5000);

@@ -1,0 +1,50 @@
+.action-item-content {
+  padding: 0px 20px;
+}
+
+.action-item-panel {
+  border-radius: 25px;
+  text-align: left;
+}
+
+.action-item-panel.grey {
+  background-color: #7f7f7f;
+}
+
+.action-item-panel.yellow {
+  background-color: #ffff00;
+}
+
+.action-item-panel.orange {
+  background-color: darkorange;
+}
+
+.action-item-panel.red {
+  background-color: #ff1a1a;
+}
+
+.action-item-text {
+  font-family: Helvetica, sans-serif;
+  font-size: 45px;
+  color: black;
+  font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.icon {
+  padding-right: 20px;
+  text-shadow: 2px 2px 5px black;
+}
+
+.buffer {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.time-elapsed {
+  font-size: 20px;
+}

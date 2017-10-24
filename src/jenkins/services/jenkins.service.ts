@@ -3,8 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { JobDetails } from '../../domain/jobDetails';
-import { ActionItem } from '../../domain/action-item';
-import { PriorityCalculator } from '../../domain/priority-calculator';
+import { ActionItem, Build } from '../../domain/action-item';
 
 import {
   JENKINS_JOB_BUILDING_COLOR, JENKINS_ENV
@@ -18,7 +17,7 @@ export class JenkinsService {
 
   getActionItems(): Promise<ActionItem[]> {
     const envPromises = [];
-    const newActionItems: ActionItem[] = [];
+    const newActionItems: Build[] = [];
     JENKINS_ENV.forEach((url) => {
       const promise = this.http.get(
         url + 'api/json?tree=jobs[name,color,inQueue,lastCompletedBuild[number,timestamp,result,url],lastBuild[number,timestamp,estimatedDuration]]',
@@ -56,7 +55,7 @@ export class JenkinsService {
         if (lastBuild && jobDetails.building) {
           jobDetails.timestampCurrentBuild = lastBuild.timestamp;
         }
-        newActionItems.push(this.convertToActionItem(jobDetails));
+        newActionItems.push(new Build(jobDetails));
       }
     }
   }
@@ -74,20 +73,6 @@ export class JenkinsService {
       && job.color !== 'disabled'
       && this.configService.repos[jobNameToBuildName]
       && job.lastCompletedBuild.result === 'FAILURE';
-  }
-
-  private convertToActionItem(jobDetails: JobDetails): ActionItem {
-    return PriorityCalculator.calculatePriority({
-      name: jobDetails.jobName,
-      priority: 0,
-      type: this.buildTypeString(jobDetails),
-      source: 'jenkins',
-      created: new Date(jobDetails.timestampLastCompletedBuild).getTime(),
-      url: jobDetails.url,
-      do_not_merge: false,
-      building: jobDetails.building,
-      buildPercentage: this.evaluateBuildPercentage(jobDetails)
-    });
   }
 
   private handleError(error: any): Promise<any> {

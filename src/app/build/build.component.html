@@ -1,0 +1,20 @@
+<div class="col-sm-12 action-item-panel buffer"
+      [ngClass]="priorityClass">
+  <a href="{{ build.url }}" target="_blank">
+    <div class="action-item-content">
+      <div class="col-sm-1"><i class="icon fa fa-server fa-4x"></i></div>
+      <div class="action-item-text col-sm-10">{{ build.name }}
+        <div class="time-elapsed-and-progress-bar-wrapper">
+          <div class="time-elapsed-in-wrapper">{{ getTimeElapsed(build.created) }}
+          </div>
+          <div *ngIf="build.building" class="progress">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ 'width': getProgressBarPercent(build.buildPercentage)}"> </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-1">
+        <mf-rage-face [priority]="build.priority"></mf-rage-face>
+      </div>
+    </div>
+  </a>
+</div>

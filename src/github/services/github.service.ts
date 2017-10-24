@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
-import { ActionItem } from '../../domain/action-item';
-import { PriorityCalculator } from '../../domain/priority-calculator';
+import { ActionItem, GitHubPullRequest, PullRequest } from '../../domain/action-item';
 import { ConfigService } from '../../config/config.service';
 import { DO_NOT_MERGE_LABEL_NAME } from './github.constants';
 
@@ -35,8 +34,7 @@ export class GithubService {
       });
   }
 
-
-  getActionItems(): Promise<ActionItem[]> {
+  getActionItems(): Promise<PullRequest[]> {
     if (!this.configService.github.isConfigured()) {
       return this.handleError('Ignoring GitHub calls since not configured');
     }
@@ -47,27 +45,8 @@ export class GithubService {
     const options = new RequestOptions({headers: headers});
     return this.http.get('https://api.github.com/search/issues?q=is:open+is:pr+team:' + mfGithubTeam, options)
       .toPromise()
-      .then(response => response.json().items.map((item => this.convertToActionItem(item))))
+      .then(response => response.json().items.map((item => new GitHubPullRequest(item))))
       .catch(this.handleError);
-  }
-
-  private convertToActionItem(pr: any): ActionItem {
-    const regex = '/blackbaud/(.*)/issues';
-    const repo = pr.url.match(regex)[1];
-    return PriorityCalculator.calculatePriority({
-      name: `${repo}: ${pr.title}`,
-      priority: 0,
-      type: 'Open PR',
-      source: 'pr',
-      created: new Date(pr.created_at).getTime(),
-      url: `${pr.html_url}`,
-      do_not_merge: this.determineDoNotMergeLabel(pr)
-    });
-  }
-
-  private determineDoNotMergeLabel(pr: any): boolean {
-    const labelNames = pr.labels.map(label => { return label.name; });
-    return labelNames.indexOf(DO_NOT_MERGE_LABEL_NAME) > -1;
   }
 
   private handleError(error: any): Promise<any> {
