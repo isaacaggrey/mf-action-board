@@ -17,7 +17,7 @@ const assetBucketConfig = {
 // initialise S3 client
 const s3 = new AWS.S3({
   signatureVersion: 'v4',
-  //see Eric Slater or Chris Cotar to get the credentials to push. Do not commit the keys.
+  //see Eric Slater or Colby M. White to get the credentials to push. Do not commit the keys.
   accessKeyId: '',
   secretAccessKey: ''
 });

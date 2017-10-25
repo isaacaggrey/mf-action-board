@@ -44,7 +44,7 @@ Within this project's directory, run the following commands
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Deployment to S3 bucket
-* Get keys from Eric Slater or Chris Cotar
+* Get keys from Eric Slater or Colby M. White
 * add to deploy.sh
 * Run `npm run deploy`
 * deployment URI: `http://mf-action-board.s3-website.us-east-2.amazonaws.com`
