@@ -73,8 +73,3 @@
 .progress-bar{
   background-color: grey;
 }
-
-#boardUpdatingMessage {
-  color: white;
-  margin-left: 10px;
-}

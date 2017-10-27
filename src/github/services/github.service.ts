@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { ActionItem, GitHubPullRequest, PullRequest } from '../../domain/action-item';
-import { ConfigService } from '../../config/config.service';
+import { ConfigService } from '../../app/config.service';
 import { DO_NOT_MERGE_LABEL_NAME } from './github.constants';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class GithubService {
     if (!this.configService.github.isConfigured()) {
       return this.handleError('Ignoring GitHub calls since not configured');
     }
-    const mfGithubTeamId = this.configService.githubConfig.teamId;
+    const mfGithubTeamId = this.configService.github.teamId;
     return this.http.get('https://api.github.com/teams/' + mfGithubTeamId + '/repos?per_page=100', this.configService.options)
       .toPromise()
       .then((response) => {

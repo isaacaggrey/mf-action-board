@@ -8,7 +8,8 @@ import { AppComponent } from './app.component';
 import { JenkinsService } from '../jenkins/services/jenkins.service';
 import { GithubService } from '../github/services/github.service';
 import { VstsService } from '../github/services/vsts.service';
-import { ConfigService } from '../config/config.service';
+import { ConfigService } from './config.service';
+import { RefreshService } from './refresh.service';
 import { NotificationsService } from '../notifications/services/notifications.service';
 import { PullRequestComponent } from './pull-request/pull-request.component';
 import { RageFaceComponent } from './rage-face/rage-face.component';
@@ -34,7 +35,14 @@ import { ActionListComponent } from './action-list/action-list.component';
     AppRoutingModule,
     HttpModule
   ],
-  providers: [JenkinsService, GithubService, VstsService, ConfigService, NotificationsService],
+  providers: [
+    JenkinsService,
+    GithubService,
+    VstsService,
+    ConfigService,
+    NotificationsService,
+    RefreshService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

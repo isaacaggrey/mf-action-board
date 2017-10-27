@@ -1,6 +1,7 @@
 import { GITHUB_PR_SLA_MS, JENKINS_ACTION_ITEM_SLA_MS } from '../config/app-config-constants';
 import { DO_NOT_MERGE_LABEL_NAME } from '../github/services/github.constants';
 import { JobDetails } from './jobDetails';
+import * as moment from 'moment';
 
 export abstract class BaseActionItem {
   url: string;
@@ -68,7 +69,7 @@ export class Build extends BaseActionItem {
   building: boolean;
   buildPercentage: number;
 
-  private static calcBuildPercentage(building: boolean, timestampCurrentBuild: string, estimatedDuration: string): number {
+  static calcBuildPercentage(building: boolean, timestampCurrentBuild: string, estimatedDuration: string): number {
     if (building) {
       const elapsedDuration = Date.now() - parseInt(timestampCurrentBuild, 10);
       return Math.max(5, Math.floor((elapsedDuration * 100) / parseInt(estimatedDuration, 10)));
@@ -77,7 +78,7 @@ export class Build extends BaseActionItem {
     }
   }
 
-  private static calcPriority(created: number): number {
+  static calcPriority(created: number): number {
     const timeElapsed = Date.now() - created;
     if (timeElapsed >= JENKINS_ACTION_ITEM_SLA_MS) {
       return 1;
@@ -88,6 +89,28 @@ export class Build extends BaseActionItem {
     }
   }
 
+  get type() {
+    return 'build';
+  }
+}
+
+export class VstsBuild extends Build {
+  ACCOUNT = 'blackbaud';
+  PROJECT = 'Products';
+  ROOTURL = `https://${this.ACCOUNT}.VisualStudio.com/${this.PROJECT}`;
+
+  constructor(jobInfo: any) {
+    super();
+    this.name = jobInfo.definition.name;
+    this.created = moment(jobInfo.finishTime).valueOf();
+    this.url = `${this.ROOTURL}/_build?buildId=${jobInfo.id}`;
+    this.building = false;
+    this.buildPercentage = null;
+    this.priority = Build.calcPriority(this.created);
+  }
+}
+
+export class JenkinsBuild extends Build {
   constructor(jobDetails: JobDetails) {
     super();
     this.name = jobDetails.jobName;
@@ -96,10 +119,6 @@ export class Build extends BaseActionItem {
     this.building = jobDetails.building;
     this.buildPercentage = Build.calcBuildPercentage(this.building, jobDetails.timestampCurrentBuild, jobDetails.estimatedDuration);
     this.priority = Build.calcPriority(this.created);
-  }
-
-  get type() {
-    return 'build';
   }
 }
 
