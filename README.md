@@ -34,8 +34,10 @@ Within this project's directory, run the following commands
 ### VSTS
 
 * Username: The login you use for VSTS, usually an email.
-* Token: A personal access token set up with `code:read` permissions. A token can be created
+* Token: A personal access token set up with the correct permissions (listed below). A token can be created
   via your user's [Security](https://blackbaud.visualstudio.com/_details/security/tokens) settings.
+  * `code:read`
+  * `build:read`
 * Team: The name of your team, which is used to determine which repos to query for.
   The team name should match what's in [`vsts-repos.ts`](https://github.com/blackbaud/mf-action-board/blob/master/src/github/services/vsts-repos.ts). In the future this will likely be a dropdown.
 
