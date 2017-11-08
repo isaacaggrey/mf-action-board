@@ -20,5 +20,8 @@ export const VSTS_REPOS = {
     'social-posting',
     'token-store',
     'skyux-spa-social'
+  ],
+  'highlander': [
+    'skyux-spa-donation-forms'
   ]
 };
