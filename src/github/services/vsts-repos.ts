@@ -9,6 +9,7 @@ export const VSTS_REPOS = {
     'skyux-routes-long',
     'social-donation-receiver',
     'facebook-api-client',
+    'common-logging',
     'open-api-client'
   ],
   'we-are-batman': [
