@@ -10,6 +10,7 @@ export const VSTS_REPOS = {
     'social-donation-receiver',
     'facebook-api-client',
     'common-logging',
+    'identity-token',
     'open-api-client'
   ],
   'we-are-batman': [
