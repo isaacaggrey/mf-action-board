@@ -22,10 +22,12 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "bootstrap": "3.3.7",
     "core-js": "^2.4.1",
+    "font-awesome": "4.7.0",
+    "moment": "^2.0.0",
     "rxjs": "^5.1.0",
-    "zone.js": "^0.8.4",
-    "moment":"^2.0.0"
+    "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@angular/cli": "1.0.0",
@@ -46,6 +48,6 @@
     "tslint": "~4.5.0",
     "typescript": "~2.2.0",
     "aws-sdk": "^2.48.0",
-    "mime-types": "^2.1.15" 
+    "mime-types": "^2.1.15"
   }
 }
