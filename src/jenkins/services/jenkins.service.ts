@@ -66,7 +66,7 @@ export class JenkinsService {
 
   // check to see if it is in the watch list from configuration
   private isInWatchList(jobName) {
-    return this.configService.github.watchList.split(', ').includes(jobName);
+    return this.configService.github.watchList && this.configService.github.watchList.split(', ').includes(jobName);
   }
 
   private includeJob(job) {
