@@ -3,6 +3,7 @@ export class GithubConfig {
   teamId: string;
   userName: string;
   token: string;
+  watchList: string;
 
   public isConfigured(): boolean {
     return Boolean(this.team) && Boolean(this.teamId) && Boolean(this.userName) && Boolean(this.token);

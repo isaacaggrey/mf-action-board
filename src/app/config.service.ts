@@ -34,6 +34,7 @@ export class ConfigService {
     this.githubConfig.teamId = localStorage.getItem(CONFIG.GITHUB.TEAM_ID);
     this.githubConfig.userName = localStorage.getItem(CONFIG.GITHUB.USERNAME);
     this.githubConfig.token = localStorage.getItem(CONFIG.GITHUB.TOKEN);
+    this.githubConfig.watchList = localStorage.getItem(CONFIG.GITHUB.WATCH_LIST);
     this.vstsConfig.username = localStorage.getItem(CONFIG.VSTS.USERNAME);
     this.vstsConfig.token = localStorage.getItem(CONFIG.VSTS.TOKEN);
     this.vstsConfig.team = localStorage.getItem(CONFIG.VSTS.TEAM);
@@ -54,6 +55,9 @@ export class ConfigService {
     }
     if (this.githubConfig.token) {
       localStorage.setItem(CONFIG.GITHUB.TOKEN, this.githubConfig.token);
+    }
+    if (this.githubConfig.watchList) {
+      localStorage.setItem(CONFIG.GITHUB.WATCH_LIST, this.githubConfig.watchList);
     }
     if (this.vstsConfig.username) {
       localStorage.setItem(CONFIG.VSTS.USERNAME, this.vstsConfig.username);

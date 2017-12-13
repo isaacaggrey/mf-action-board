@@ -64,6 +64,11 @@ export class JenkinsService {
     return job.inQueue || job.color === JENKINS_JOB_BUILDING_COLOR;
   }
 
+  // check to see if it is in the watch list from configuration
+  private isInWatchList(jobName) {
+    return this.configService.github.watchList.split(', ').includes(jobName);
+  }
+
   private includeJob(job) {
     const jobName = job.name;
     const jobType = jobName.substring(jobName.indexOf('_') + 1, jobName.length);
@@ -71,7 +76,7 @@ export class JenkinsService {
     return jobType !== 'release'
       && jobType !== 'promote'
       && job.color !== 'disabled'
-      && this.configService.repos[jobNameToBuildName]
+      && (this.configService.repos[jobNameToBuildName] || this.isInWatchList(jobNameToBuildName))
       // hardcoded exclusion of two builds that  @micro-dev has tickets to go fix.
       && jobName !== 'notifications-component_int-apps-test'
       && jobName !== 'notifications-component_dev-apps-test-nightly'

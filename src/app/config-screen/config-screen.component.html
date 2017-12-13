@@ -32,6 +32,11 @@
             <input type="text" class="form-control input-lg"
               [ngModel]="getGitHubConfigValue('token')" (ngModelChange)="setGitHubConfigValue('token', $event)" />
           </div>
+          <div class="form-group">
+            <label>Watch Repos</label>
+            <input type="text" class="form-control input-lg"
+                   [ngModel]="getGitHubConfigValue('watchList')" (ngModelChange)="setGitHubConfigValue('watchList', $event)" />
+          </div>
         </div>
       </div>
     </div>
