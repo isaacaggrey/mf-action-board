@@ -16,7 +16,8 @@ export const VSTS_REPOS = {
     'skyux-spa-workflows',
     'workflow-designer',
     'azure-scheduler-sdk',
-    'common-provider-pact'
+    'common-provider-pact',
+    'actions-adapter'
   ],
   'brady-bunch': [
     'social-posting',
