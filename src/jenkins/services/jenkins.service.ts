@@ -72,7 +72,7 @@ export class JenkinsService {
   private includeJob(job) {
     const jobName = job.name;
     const jobType = jobName.substring(jobName.indexOf('_') + 1, jobName.length);
-    const jobNameToBuildName = jobName.substring(0, jobName.indexOf('_'));
+    const jobNameToBuildName = this.determineBuildName(jobName);
     return jobType !== 'release'
       && jobType !== 'promote'
       && job.color !== 'disabled'
@@ -81,6 +81,14 @@ export class JenkinsService {
       && jobName !== 'notifications-component_int-apps-test'
       && jobName !== 'notifications-component_dev-apps-test-nightly'
       && job.lastCompletedBuild.result === 'FAILURE';
+  }
+
+  private determineBuildName(jobName:any){
+      let jobNameToBuildName = jobName.substring(0, jobName.indexOf('_'));
+      if (jobName.indexOf('luminate-online') != -1) {
+        jobNameToBuildName = jobName;
+      }
+      return jobNameToBuildName;
   }
 
   private handleError(error: any): Promise<any> {
