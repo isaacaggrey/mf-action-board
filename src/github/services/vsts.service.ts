@@ -5,21 +5,24 @@ import * as moment from 'moment';
 
 import { ConfigService } from '../../app/config.service';
 import { VSTS_REPOS } from './vsts-repos';
-import { ActionItem, VstsPullRequest, PullRequest, Build, VstsBuild} from '../../domain/action-item';
+import { ActionItem, VstsPullRequest, PullRequest, Build, VstsBuild, VstsRelease} from '../../domain/action-item';
 
 @Injectable()
 export class VstsService {
   ACCOUNT = 'blackbaud';
   COLLECTION = 'DefaultCollection';
   VERSION = '2.0';
+  PREVIEW_VERSION = '4.0-preview.3';
   PROJECT = 'Products';
   ROOTURL = `https://${this.ACCOUNT}.VisualStudio.com/${this.COLLECTION}/${this.PROJECT}`;
+  PREVIEW_URL = `https://${this.ACCOUNT}.vsrm.VisualStudio.com/${this.PROJECT}`;
 
   constructor(private http: Http, private configService: ConfigService) {
   }
 
   getActionItems(): Promise<ActionItem[]> {
-    return Promise.all([this.getFailedBuilds(), this.getPullRequests()]).then(items => [].concat.apply([], items));
+    const promises = [this.getFailedBuilds(), this.getPullRequests(), this.getFailedReleases()];
+    return Promise.all(promises).then(items => [].concat.apply([], items));
   }
 
   getFailedBuilds(): Promise<ActionItem[]> {
@@ -28,8 +31,22 @@ export class VstsService {
       .then(failedBuildInfo => failedBuildInfo.map(info => new VstsBuild(info)));
   }
 
+  getFailedReleases(): Promise<ActionItem[]> {
+    return this.getReleases()
+      .then(releases => releases.filter(this.isFailedRelease))
+      .then(failedReleaseInfo => failedReleaseInfo.map(info => new VstsRelease(info)));
+  }
+
   private isFailedBuild(info: any): boolean {
     return info !== undefined && info.result !== 'succeeded';
+  }
+
+  private isFailedRelease(info: any): boolean {
+    if (info === undefined) {
+      return false;
+    }
+    const failed_envs = info.environments.filter(env => env.status !== 'succeeded' && env.status !== 'canceled');
+    return failed_envs.length !== 0;
   }
 
   getBuilds(): Promise<any> {
@@ -39,6 +56,26 @@ export class VstsService {
         const promises = ids.map(this.getLastMasterBuild.bind(this));
         return Promise.all(promises).then(builds => [].concat.apply([], builds));
       });
+  }
+
+  getReleases(): Promise<any> {
+    return this.getReleaseDefinitionIds()
+      .then(definition_ids => definition_ids.filter(id => id !== null))
+      .then(definition_ids => {
+        const promises = definition_ids.map(this.getLatestReleaseId.bind(this));
+        return Promise.all(promises).then(release_ids => [].concat.apply([], release_ids));
+      })
+      .then(release_ids => release_ids.filter(id => id !== null))
+      .then(release_ids => {
+        const promises = release_ids.map(this.getRelease.bind(this));
+        return Promise.all(promises).then(releases => [].concat.apply([], releases));
+      });
+  }
+
+  getRelease(release_id: number): Promise<any> {
+    return this.http.get(this.releaseUrl(release_id), this.requestOptions)
+      .toPromise()
+      .then(response => response.json());
   }
 
   getLastMasterBuild(definition_id: number): Promise<any> {
@@ -80,6 +117,30 @@ export class VstsService {
     return Promise.all(promises).then(prPromiseResults => [].concat.apply([], prPromiseResults));
   }
 
+  getReleaseDefinitionIds(): Promise<number[]> {
+    if (!this.configService.vsts.isConfigured()) {
+      return this.handleError('Ignoring VSTS calls since not configured');
+    }
+    const promises: Promise<VstsPullRequest[]>[] = this.repos.map(repo => {
+      return this.http.get(this.releaseDefinitionsUrl(repo), this.requestOptions)
+        .toPromise()
+        .then(response => response.json())
+        .then(response => (response.count === 1) ? response.value[0].id : null)
+        .catch(this.handleError);
+      });
+    return Promise.all(promises).then(prPromiseResults => [].concat.apply([], prPromiseResults));
+  }
+
+  getLatestReleaseId(definition_id: number): Promise<number> {
+    if (!this.configService.vsts.isConfigured()) {
+      return this.handleError('Ignoring VSTS calls since not configured');
+    }
+    return this.http.get(this.releasesUrl(definition_id), this.requestOptions)
+      .toPromise()
+      .then(response => response.json())
+      .then(response => (response.count >= 1) ? response.value[0].id : null);
+  }
+
   private get requestOptions(): RequestOptions {
     const username = this.configService.vsts.username;
     const token = this.configService.vsts.token;
@@ -113,5 +174,17 @@ export class VstsService {
   private buildsUrl(definition_id: number): string {
     const root = `${this.ROOTURL}/_apis/build/builds/?api-version=${this.VERSION}`;
     return `${root}&definitions=${definition_id}&minFinishTime=${this.last_month().format()}`;
+  }
+
+  private releaseDefinitionsUrl(repo): string {
+    return `${this.PREVIEW_URL}/_apis/release/definitions/?api-version=${this.PREVIEW_VERSION}&searchText=${repo}`;
+  }
+
+  private releasesUrl(definition_id: number): string {
+    return `${this.PREVIEW_URL}/_apis/release/releases/?api-version=${this.PREVIEW_VERSION}&definitionId=${definition_id}`;
+  }
+
+  private releaseUrl(release_id: number): string {
+    return `${this.PREVIEW_URL}/_apis/release/releases/${release_id}?api-version=${this.PREVIEW_VERSION}`;
   }
 }

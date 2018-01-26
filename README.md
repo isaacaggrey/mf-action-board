@@ -1,5 +1,6 @@
 # MF Action Board
 
+![Logo](logo.png)
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
 ## Install prereqs
@@ -38,6 +39,7 @@ Within this project's directory, run the following commands
   via your user's [Security](https://blackbaud.visualstudio.com/_details/security/tokens) settings.
   * `code:read`
   * `build:read`
+  * `release:read`
 * Team: The name of your team, which is used to determine which repos to query for.
   The team name should match what's in [`vsts-repos.ts`](https://github.com/blackbaud/mf-action-board/blob/master/src/github/services/vsts-repos.ts). In the future this will likely be a dropdown.
 

@@ -110,6 +110,19 @@ export class VstsBuild extends Build {
   }
 }
 
+export class VstsRelease extends Build {
+  constructor(releaseInfo: any) {
+    super();
+    this.name = releaseInfo.releaseDefinition.name;
+    this.created = moment(releaseInfo.createdOn).valueOf();
+    this.url = releaseInfo._links.web.href;
+    const inProgressEnvs = releaseInfo.environments.filter(env => env.status === 'inProgress');
+    this.building = inProgressEnvs.length > 0;
+    this.buildPercentage = 50;
+    this.priority = (this.building) ? 4 : Build.calcPriority(this.created);
+  }
+}
+
 export class JenkinsBuild extends Build {
   constructor(jobDetails: JobDetails) {
     super();
