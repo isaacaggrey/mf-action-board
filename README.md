@@ -20,7 +20,8 @@ Within this project's directory, run the following commands
 * Username
   * Either personal or new user that is a member of your team (we rely on GitHub team repo association to get builds!!)
 * Github api token
-  * account settings -> personal access tokens
+  * account settings -> developer settings -> personal access tokens -> Generate new token
+  * Select the following scope: `Full control of private repositories`
 * Team ID
   * `curl -u <username>:<github-api-token> https://api.github.com/user/teams | grep '"name": "<teamname>"' -A 3`
     * i.e. `curl -u blackbaud-christophercotar:1e49ze..................... https://api.github.com/user/teams | grep '"name": "micro-cervezas"' -A 3`
