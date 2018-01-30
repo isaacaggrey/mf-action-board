@@ -10,6 +10,7 @@ export const VSTS_REPOS = {
     'social-donation-receiver',
     'facebook-api-client',
     'common-logging',
+    'bb-java-base-docker-image'
     'identity-token'
   ],
   'we-are-batman': [
@@ -17,6 +18,7 @@ export const VSTS_REPOS = {
     'workflow-designer',
     'azure-scheduler-sdk',
     'common-provider-pact',
+    'bb-java-base-docker-image',
     'actions-adapter'
   ],
   'brady-bunch': [
