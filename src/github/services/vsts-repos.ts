@@ -26,6 +26,9 @@ export const VSTS_REPOS = {
     'skyux-spa-social'
   ],
   'highlander': [
-    'skyux-spa-donation-forms'
+    'skyux-spa-donation-forms',
+    'forms-management',
+    'donation-form-reporting',
+    'donation-form-reporting-database'
   ]
 };
