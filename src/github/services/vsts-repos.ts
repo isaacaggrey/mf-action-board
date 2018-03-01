@@ -18,7 +18,8 @@ export const VSTS_REPOS = {
     'workflow-designer',
     'azure-scheduler-sdk',
     'common-provider-pact',
-    'actions-adapter'
+    'actions-adapter',
+    'constituent-adapter'
   ],
   'brady-bunch': [
     'social-posting',
