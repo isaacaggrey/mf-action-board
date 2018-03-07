@@ -30,7 +30,8 @@ export const VSTS_REPOS = {
     'skyux-spa-donation-forms',
     'forms-management',
     'donation-form-reporting',
-    'donation-form-reporting-database'
+    'donation-form-reporting-database',
+    'common-eventhubs'
   ],
   'voltron' : [
     'installment-engine',
