@@ -11,6 +11,7 @@ export const VSTS_REPOS = {
     'facebook-api-client',
     'common-logging',
     'bb-java-base-docker-image',
+    'scs-definition-lng-lonextgen',
     'identity-token'
   ],
   'we-are-batman': [
