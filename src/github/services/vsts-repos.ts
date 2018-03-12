@@ -3,6 +3,7 @@
 export const VSTS_REPOS = {
   'micro-cervezas': [
     'common-test',
+    'common-retry',
     'bluemoon-admin-login',
     'bluemoon-config-server',
     'java-project-builder',
