@@ -21,7 +21,8 @@ export const VSTS_REPOS = {
     'azure-scheduler-sdk',
     'common-provider-pact',
     'actions-adapter',
-    'constituent-adapter'
+    'constituent-adapter',
+    'skyux-spa-workflow-designer-docs'
   ],
   'brady-bunch': [
     'social-posting',
