@@ -22,7 +22,8 @@ export const VSTS_REPOS = {
     'common-provider-pact',
     'actions-adapter',
     'constituent-adapter',
-    'skyux-spa-workflow-designer-docs'
+    'skyux-spa-workflow-designer-docs',
+    'skyux-lib-action-form'
   ],
   'brady-bunch': [
     'social-posting',
