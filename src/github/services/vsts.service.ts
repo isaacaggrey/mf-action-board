@@ -125,10 +125,19 @@ export class VstsService {
       return this.http.get(this.releaseDefinitionsUrl(repo), this.requestOptions)
         .toPromise()
         .then(response => response.json())
-        .then(response => (response.count === 1) ? response.value[0].id : null)
+        .then(response => this.getReleaseDefinitionByRepo(repo, response))
         .catch(this.handleError);
       });
     return Promise.all(promises).then(prPromiseResults => [].concat.apply([], prPromiseResults));
+  }
+
+  getReleaseDefinitionByRepo(repo: string, definitions) {
+    if (definitions.count === 0) {
+      return null;
+    } else {
+      const definition = definitions.value.find(response => response.name === repo);
+      return definition !== null ? definition.id : null;
+    }
   }
 
   getLatestReleaseId(definition_id: number): Promise<number> {
