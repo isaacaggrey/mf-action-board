@@ -13,6 +13,7 @@ export const VSTS_REPOS = {
     'common-logging',
     'bb-java-base-docker-image',
     'scs-definition-lng-lonextgen',
+    'skyux-lib-form',
     'identity-token'
   ],
   'we-are-batman': [
@@ -28,6 +29,7 @@ export const VSTS_REPOS = {
   'brady-bunch': [
     'social-posting',
     'token-store',
+    'skyux-lib-common-ui-test',
     'skyux-spa-social'
   ],
   'highlander': [
