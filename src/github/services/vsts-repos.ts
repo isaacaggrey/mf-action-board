@@ -14,6 +14,7 @@ export const VSTS_REPOS = {
     'bb-java-base-docker-image',
     'scs-definition-lng-lonextgen',
     'skyux-lib-form',
+    'skyux-spa-donation-forms',
     'identity-token'
   ],
   'we-are-batman': [
@@ -33,6 +34,7 @@ export const VSTS_REPOS = {
     'skyux-spa-social'
   ],
   'highlander': [
+    'skyux-lib-form',
     'skyux-spa-donation-forms',
     'forms-management',
     'donation-form-reporting',
