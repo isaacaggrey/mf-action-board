@@ -31,7 +31,8 @@ export const VSTS_REPOS = {
     'social-posting',
     'token-store',
     'skyux-lib-common-ui-test',
-    'skyux-spa-social'
+    'skyux-spa-social',
+    'bluemoon-local-router'
   ],
   'highlander': [
     'skyux-lib-form',
