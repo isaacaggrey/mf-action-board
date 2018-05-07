@@ -34,7 +34,8 @@ export const VSTS_REPOS = {
     'token-store',
     'skyux-lib-common-ui-test',
     'skyux-spa-social',
-    'bluemoon-local-router'
+    'bluemoon-local-router',
+    'bb-permissions-marketing-social'
   ],
   'highlander': [
     'skyux-lib-form',
