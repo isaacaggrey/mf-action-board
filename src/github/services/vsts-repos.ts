@@ -15,7 +15,9 @@ export const VSTS_REPOS = {
     'scs-definition-lng-lonextgen',
     'skyux-lib-form',
     'skyux-spa-donation-forms',
-    'identity-token'
+    'identity-token',
+    'skyux-spa-reactive-demo'
+
   ],
   'we-are-batman': [
     'skyux-spa-workflows',
